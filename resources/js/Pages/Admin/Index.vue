@@ -3,7 +3,7 @@ import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 
 const redirectToHome = (() => {
-    router.get(route('index.index'))
+    router.get(route('index'))
 })
 </script>
 

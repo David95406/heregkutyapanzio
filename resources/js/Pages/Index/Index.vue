@@ -5,7 +5,7 @@ import { route } from "ziggy-js";
 const count = ref(0)
 
 const redirectToAdmin = () => {
-  route('admin.index')
+  router.get(route('admin.index'))
 }
 </script>
 
@@ -15,7 +15,7 @@ const redirectToAdmin = () => {
   </header>
   <main>
     <button @click="count++">Click me: {{ count }}</button>
-    <button @click="redirectToAdmin">Admin site</button>
+    <button @click="redirectToAdmin()">Admin site</button>
   </main>
   <footer>
     <p>Hereg</p>
