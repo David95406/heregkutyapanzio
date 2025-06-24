@@ -5,7 +5,7 @@ import Navigation from '../../Components/Navigation.vue';
 
 <template>
   <Navigation />
+  <h1>Rolunk oldal</h1>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

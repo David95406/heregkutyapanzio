@@ -4,8 +4,8 @@ import Navigation from '../../Components/Navigation.vue';
 </script>
 
 <template>
-  <Navigation />
+    <Navigation />
+    <h1>Booking oldal</h1>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

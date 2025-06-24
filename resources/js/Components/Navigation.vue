@@ -1,20 +1,24 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
+import { router, usePage } from '@inertiajs/vue3'
+import { computed } from "vue";
 import { route } from 'ziggy-js'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Link } from '@inertiajs/vue3'
+
+const page = usePage()
+const currentPageComponent = computed(() => page.component)
 
 const navigation = [
-    { name: 'Kezdőlap', href: '/', current: true },
-    { name: 'Rólunk', href: '#', current: false },
-    { name: 'Foglalás', href: '#', current: false },
-]
+    { name: 'Kezdőlap', href: "/", component: "Index/Index" },
+    { name: 'Rólunk', href: '/rolunk', component: "About/Index" },
+    { name: 'Foglalás', href: '/foglalas', component: "Booking/Index" },
+].map((page) => ({
+    ...page,
+    current: page.component === currentPageComponent.value
+}))
 
 
-const redirectTo = (url) => {
-    alert("ok")
-    router.get(route(url))
-}
 </script>
 <template>
     <Disclosure as="nav" class="bg-linear-to-b from-white to-light-blue" v-slot="{ open }">
@@ -35,7 +39,7 @@ const redirectTo = (url) => {
                 </div>
                 <div class="hidden sm:flex flex-1 items-center justify-center">
                     <div class="flex space-x-90">
-                        <a v-for="item in navigation" :key="item.name" :href="item.href"
+                        <Link v-for="item in navigation" :key="item.name" :href="item.href"
                             class="font-bold text-3xl pb-1 relative group"
                             :class="[item.current ? 'text-black' : 'text-gray-400 hover:text-black']"
                             style="letter-spacing: 0.4rem;" :aria-current="item.current ? 'page' : undefined">
@@ -43,7 +47,7 @@ const redirectTo = (url) => {
                             <div class="absolute bottom-0 right-1 w-1/2 h-1 transition-colors duration-300"
                                 :class="[item.current ? 'bg-orange-500' : 'bg-transparent group-hover:bg-orange-500']">
                             </div>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
@@ -52,7 +56,7 @@ const redirectTo = (url) => {
 
         <DisclosurePanel class="sm:hidden">
             <div class="space-y-1 px-2 pt-2 pb-3">
-                <DisclosureButton v-for="item in navigation" :key="item.name" as="button" @click="alert(item.href)"
+                <DisclosureButton v-for="item in navigation" :key="item.name" as="Link"
                     :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']"
                     :aria-current="item.current ? 'page' : undefined">
                     {{ item.name }}
