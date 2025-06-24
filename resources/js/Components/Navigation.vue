@@ -1,10 +1,8 @@
 <script setup>
-import { router, usePage } from '@inertiajs/vue3'
-import { computed } from "vue";
-import { route } from 'ziggy-js'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { Link } from '@inertiajs/vue3'
+import { computed } from 'vue'
+import { Link, usePage } from '@inertiajs/vue3'
 
 const page = usePage()
 const currentPageComponent = computed(() => page.component)
@@ -18,49 +16,54 @@ const navigation = [
     current: page.component === currentPageComponent.value
 }))
 
-
 </script>
 <template>
-    <Disclosure as="nav" class="bg-linear-to-b from-white to-light-blue" v-slot="{ open }">
-        <div class="px-2 sm:px-6 lg:px-8">
-            <div class="max-w-full relative flex h-16 items-center">
-                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                    <!-- Mobile menu button-->
-                    <DisclosureButton
-                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
-                        <span class="absolute -inset-0.5" />
-                        <span class="sr-only">Open main menu</span>
-                        <Bars3Icon v-if="!open" class="block size-6" aria-hidden="true" />
-                        <XMarkIcon v-else class="block size-6" aria-hidden="true" />
-                    </DisclosureButton>
+    <Disclosure as="nav" class="bg-gradient-to-b from-white to-light-blue manrope-normal" v-slot="{ open }">
+        <div class="px-4 mx-auto max-w-7xl tablet:px-6 desktop:px-8">
+            <div class="relative flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center flex-shrink-0">
+                    <img class="h-10 w-auto" src="https://placehold.co/100x100" alt="Company Logo">
                 </div>
-                <div class="flex shrink-0 items-center">
-                    <p>Logo helye</p>
-                </div>
-                <div class="hidden sm:flex flex-1 items-center justify-center">
-                    <div class="flex space-x-90">
+                
+                <!-- Desktop navigation -->
+                <div class="hidden tablet:flex items-center justify-center flex-1">
+                    <div class="flex space-x-4 tablet:space-x-6 desktop:space-x-8">
                         <Link v-for="item in navigation" :key="item.name" :href="item.href"
-                            class="font-bold text-3xl pb-1 relative group"
+                            class="relative manrope-bold tracking-widest text-lg tablet:text-xl desktop:text-2xl pb-1 group transition-colors duration-300"
                             :class="[item.current ? 'text-black' : 'text-gray-400 hover:text-black']"
-                            style="letter-spacing: 0.4rem;" :aria-current="item.current ? 'page' : undefined">
+                            :aria-current="item.current ? 'page' : undefined">
                             {{ item.name }}
                             <div class="absolute bottom-0 right-1 w-1/2 h-1 transition-colors duration-300"
-                                :class="[item.current ? 'bg-orange-500' : 'bg-transparent group-hover:bg-orange-500']">
-                            </div>
+                                :class="[item.current ? 'bg-orange-500' : 'bg-transparent group-hover:bg-orange-500']"></div>
                         </Link>
                     </div>
                 </div>
-
+                
+                <!-- Mobile menu button -->
+                <div class="tablet:hidden">
+                    <DisclosureButton
+                        class="relative inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:bg-gray-100 hover:text-black focus:outline-none focus:ring-2">
+                        <span class="sr-only">Open main menu</span>
+                        <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
+                        <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
+                    </DisclosureButton>
+                </div>
             </div>
         </div>
 
-        <DisclosurePanel class="sm:hidden">
-            <div class="space-y-1 px-2 pt-2 pb-3">
-                <DisclosureButton v-for="item in navigation" :key="item.name" as="Link"
-                    :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']"
+        <!-- Mobile menu panel -->
+        <DisclosurePanel class="tablet:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href"
+                    :class="[item.current ? 'text-black' : 'text-gray-600 hover:bg-gray-100 hover:text-black', 
+                    'block px-3 py-2 rounded-md text-base font-medium relative group']"
                     :aria-current="item.current ? 'page' : undefined">
                     {{ item.name }}
+                    <div class="absolute bottom-0 ms-9 w-1/12 h-1 transition-colors duration-300"
+                                :class="[item.current ? 'bg-orange-500' : 'bg-transparent group-hover:bg-orange-500']"></div>
                 </DisclosureButton>
+                
             </div>
         </DisclosurePanel>
     </Disclosure>

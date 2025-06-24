@@ -9,4 +9,12 @@ class AdminController extends Controller
     public function index() {
         return inertia("Admin/Index");
     }
+
+    function destroy(Request $request) {
+        $request->auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('index');
+    }
 }
