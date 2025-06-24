@@ -1,13 +1,12 @@
 <?php
 return [
-
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'admins',
+        'guard' => 'admin', 
+        'passwords' => 'admins', 
     ],
 
     'guards' => [
-        'web' => [
+        'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
