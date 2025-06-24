@@ -10,6 +10,10 @@ class AdminController extends Controller
         return inertia("Admin/Index");
     }
 
+    public function settings(Request $request) {
+        return inertia("Admin/Settings/Index");
+    }
+
     function destroy(Request $request) {
         $request->auth()->logout();
         $request->session()->invalidate();

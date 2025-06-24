@@ -19,8 +19,8 @@ Route::middleware('guest:admin')->prefix('admin')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.store');
 });
 
-// Itt a sima 'auth' middleware-t használjuk, de megadjuk neki az 'admin' guard-ot.
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    // ide jön a többi admin route
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 });

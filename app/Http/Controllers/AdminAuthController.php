@@ -17,27 +17,23 @@ class AdminAuthController extends Controller
         $credentials = $request->validate([
             'username' => "required|min:4|max:200|string",
             'password' => "required|min:4|max:200|string",
+            'remember_me' => "boolean" // piotr!
         ]);
 
         if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            // Sikeres bejelentkezés, átirányítás az admin dashboard-ra
-            return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('admin.index'));
         }
 
-        // Sikertelen bejelentkezés
         return back()->withErrors([
-            'email' => 'A megadott adatok érvénytelenek.',
+            'username' => 'A megadott adatok érvénytelenek.',
         ]);
     }
 
-    /**
-     * Kijelentkezés kezelése (ha szükséges)
-     */
     public function logout(Request $request)
     {
-        $request->auth()::guard('admin')->logout();
+        Auth::guard('admin')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
