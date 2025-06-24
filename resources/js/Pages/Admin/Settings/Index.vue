@@ -1,16 +1,13 @@
 <script setup>
-import Navigation from '../Components/Navigation.vue';
+import AdminLayout from '../../../Layout/AdminLayout.vue';
+
+defineOptions({
+  layout: AdminLayout
+})
 </script>
 
 <template>
-  <header>
-    <Navigation />
-  </header>
-  <main>
-    <h1>Settings page</h1>
-  </main>
+  <h1>Settings page</h1>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

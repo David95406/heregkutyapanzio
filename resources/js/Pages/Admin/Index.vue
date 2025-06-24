@@ -1,7 +1,11 @@
 <script setup>
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
-import Navigation from './Components/Navigation.vue';
+import AdminLayout from '../../Layout/AdminLayout.vue';
+
+defineOptions({
+  layout: AdminLayout
+})
 
 const redirectToHome = (() => {
   router.get(route('index'))
@@ -13,9 +17,6 @@ const redirectToSettings = () => {
 </script>
 
 <template>
-  <header>
-    <Navigation />
-  </header>
   <h1>Admin</h1>
   <button @click="redirectToHome">Go back</button>
   <br>

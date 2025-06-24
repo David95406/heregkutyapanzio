@@ -1,7 +1,5 @@
 <script setup>
 import ContentBlock from './Components/Contentblock.vue';
-import Navigation from '../../Components/Navigation.vue';
-import Footer from '../../Components/Footer.vue';
 const icons = {
     phone: `
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E7AAE" class="size-6">
@@ -29,10 +27,7 @@ const aboutItems = [
 
 </script>
 <template>
-    <header>
-        <Navigation />
-    </header>
-    <main>
+    <section>
         <ContentBlock breadcrumb="Kapcsolat" title="Lépj velünk kapcsolatba"
             subtitle="Keress minket bizalommal elérhetőségeink egyikén, vagy írj nekünk üzenetet!"
             image="https://placehold.co/600x400" :items="aboutItems" :reverse="false" />
@@ -41,10 +36,7 @@ const aboutItems = [
             :reverse="true" />
         <ContentBlock breadcrumb="Történetünk" title="Rólunk" subtitle="Második bekezdés tartalma..."
             image="https://placehold.co/600x400" :reverse="false" />
-    </main>
-    <footer>
-        <Footer />
-    </footer>
+    </section>
 </template>
 
 
