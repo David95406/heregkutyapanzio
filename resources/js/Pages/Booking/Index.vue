@@ -1,13 +1,9 @@
 <script setup>
-import Navigation from '../../Components/Navigation.vue';
 import StepCard from './Components/StepCard.vue';
-import Footer from '../../Components/Footer.vue';
+
 </script>
 <template>
-    <header>
-        <Navigation />
-    </header>
-    <main>
+    <section>
         <div class="flex flex-col tablet:flex-row w-full manrope-normal">
             <section class="flex flex-col w-full bg-light-blue @h-1/2">
                 <p class="p-4 text-textBlue">Foglalás > <span class="font-bold">Kezdeti lépések</span></p>
@@ -42,9 +38,6 @@ import Footer from '../../Components/Footer.vue';
                 </div>
             </section>
         </div>
-    </main>
-    <footer>
-        <Footer /> 
-    </footer>
+    </section>
 </template>
 <style scoped></style>
