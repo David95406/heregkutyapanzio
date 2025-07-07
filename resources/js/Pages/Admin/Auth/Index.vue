@@ -5,7 +5,7 @@ import { route } from 'ziggy-js';
 import AdminLayout from '../../../Layout/AdminLayout.vue';
 
 defineOptions({
-  layout: AdminLayout
+  layout: undefined
 })
 
 const adminForm = useForm({
