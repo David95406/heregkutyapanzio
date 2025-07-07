@@ -14,6 +14,7 @@ Route::resource('rolunk', AboutController::class)->only(['index']);
 Route::resource('foglalas', BookingController::class)->only(['index']);
 
 // admin
+/*
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'index'])->name('admin.login');
     Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.store');
@@ -24,3 +25,4 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('settings', [AdminController::class, 'settings'])->name('admin.settings');
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 });
+*/
