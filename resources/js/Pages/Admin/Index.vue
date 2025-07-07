@@ -17,10 +17,14 @@ const redirectToSettings = () => {
 </script>
 
 <template>
-  <h1>Admin</h1>
-  <button @click="redirectToHome">Go back</button>
-  <br>
-  <button @click="redirectToSettings">Settings</button>
+  <div class="p-6">
+    <h1 class="text-2xl font-bold mb-4">Admin</h1>
+    <h2 class="text-xl font-semibold mb-6">Foglalások</h2>
+    <div class="space-x-4">
+      <button @click="redirectToHome" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Vissza a főoldalra</button>
+      <button @click="redirectToSettings" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Settings</button>
+    </div>
+  </div>
 </template>
 
 <style scoped></style>
