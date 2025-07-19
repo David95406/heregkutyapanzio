@@ -4,6 +4,8 @@ import StepCard from './Components/StepCard.vue';
 import { ref, computed, reactive } from 'vue';
 import { route } from 'ziggy-js';
 import { toMySqlDateTime } from '../../utils';
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
 
 const props = defineProps({
     blockedDates: Array
@@ -58,11 +60,21 @@ const submitForm = () => {
 
     bookingForm.post(route("foglalas.store"), {
         onSuccess: () => {
-            alert("siker")
+            createToast('A foglalásodat sikeresen rögzítettük, hamarosan keresni fogunk emailben vagy telefonon. 😊', {
+                type: 'success',
+                transition: 'slide',
+                position: 'top-right',
+                timeout: 10000,
+            })
             bookingForm.reset()
         },
         onError: (error) => {
-            alert(error.date)
+            createToast('Hoppá, valamiért nem sikerült a foglalás. Ne aggódj, segítünk! Keress minket emailben vagy telefonon. 😊', {
+                type: 'danger',
+                transition: 'slide',
+                position: 'top-right',
+                timeout: 10000,
+            })
         }
     })
 }

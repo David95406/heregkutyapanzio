@@ -2,13 +2,6 @@
 import Navigation from './Components/Navigation.vue';
 import Footer from './Components/Footer.vue';
 import { usePage } from '@inertiajs/vue3';
-
-// flash errors!
-const page = usePage()
-
-const errorMessage = computed(() => {
-
-})
 </script>
 
 <template>
