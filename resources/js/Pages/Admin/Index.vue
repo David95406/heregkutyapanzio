@@ -2,10 +2,17 @@
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 import AdminLayout from '../../Layout/AdminLayout.vue';
+import { computed } from 'vue';
 
 defineOptions({
   layout: AdminLayout
 })
+
+const props = defineProps({
+  bookings: Array
+})
+
+const bookings = computed(() => props.bookings.sort((b1, b2) => new Date(b2.created_at) - new Date(b1.created_at)))
 
 const redirectToHome = (() => {
   router.get(route('index'))
@@ -24,6 +31,10 @@ const redirectToSettings = () => {
       <button @click="redirectToHome" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Vissza a főoldalra</button>
       <button @click="redirectToSettings" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Settings</button>
     </div>
+  </div>
+  <div v-for="booking in bookings">
+    <p>{{ booking }}</p>
+    <br>
   </div>
 </template>
 

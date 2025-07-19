@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class BlockedDate extends Model
 {
-    protected $fillable = ['date', 'note'];
+    protected $fillable = ['date'];
 }

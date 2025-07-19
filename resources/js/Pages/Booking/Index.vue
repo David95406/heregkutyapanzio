@@ -42,6 +42,14 @@ const bookingForm = useForm({
     description: "",
     start_date: null,
     end_date: null,
+    reset() {
+        this.name = ""
+        this.email = ""
+        this.phone = ""
+        this.description = ""
+        this.start_date = null
+        this.end_date = null
+    }
 })
 
 const submitForm = () => {
@@ -51,6 +59,7 @@ const submitForm = () => {
     bookingForm.post(route("foglalas.store"), {
         onSuccess: () => {
             alert("siker")
+            bookingForm.reset()
         },
         onError: (error) => {
             alert(error.date)

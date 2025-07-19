@@ -14,18 +14,15 @@ class BlockedDateSeeder extends Seeder
     public function run(): void
     {
         BlockedDate::create([
-            'date' => '2025-07-23 00:00:00',
-            'note' => "nem van"
+            'date' => '2025-07-23 00:00:00'
         ]);
 
         BlockedDate::create([
-            'date' => '2025-07-25 00:00:00',
-            'note' => "nem van"
+            'date' => '2025-07-25 00:00:00'
         ]);
 
         BlockedDate::create([
-            'date' => '2025-07-21 00:00:00',
-            'note' => "nem van"
+            'date' => '2025-07-21 00:00:00'
         ]);
     }
 }

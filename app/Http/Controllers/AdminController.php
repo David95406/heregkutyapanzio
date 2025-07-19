@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function index() {
-        return inertia("Admin/Index");
+        $bookings = Booking::all()->makeHidden(['id', 'updated_at']);
+
+        return inertia("Admin/Index", [
+            "bookings" => $bookings
+        ]);
     }
 
     public function settings(Request $request) {
