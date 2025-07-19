@@ -66,7 +66,9 @@ const submitForm = () => {
                 position: 'top-right',
                 timeout: 10000,
             })
+            
             bookingForm.reset()
+            range.value = { start: null, end: null }
         },
         onError: (error) => {
             createToast('Hoppá, valamiért nem sikerült a foglalás. Ne aggódj, segítünk! Keress minket emailben vagy telefonon. 😊', {

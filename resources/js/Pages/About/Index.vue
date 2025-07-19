@@ -1,5 +1,5 @@
 <script setup>
-import ContentBlock from './Components/Contentblock.vue';
+import ContentBlock from './Components/ContentBlock.vue';
 
 const icons = {
     phone: `
@@ -21,9 +21,9 @@ const icons = {
 }
 
 const aboutItems = [
-    { svg: icons.phone, text: '1234-345-678' },
-    { svg: icons.mail, text: 'xyxyxy@gmail.com' },
-    { svg: icons.location, text: 'xyxyxy, Héreg' }
+    { svg: icons.phone, text: '+36302250113', type:'phone', },
+    { svg: icons.mail, text: 'adrianjozsa81@gmail.com', type:'email', },
+    { svg: icons.location, text: 'Héreg, Béke u. 34, 2832', type:'location', }
 ]
 
 </script>
@@ -33,7 +33,7 @@ const aboutItems = [
             subtitle="Keress minket bizalommal elérhetőségeink egyikén, vagy írj nekünk üzenetet!"
             image="https://placehold.co/600x400" :items="aboutItems" :reverse="false" />
         <ContentBlock breadcrumb="Történetünk" title="Rólunk"
-            subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit..." image="https://placehold.co/600x400"
+            subtitle="Koss Krisztina Zsuzsanna vagyok, világéletemben voltak állataim. 30 éves kutya nevelői és kiképzői tapasztalattal vállalom kutyák illetve kisállatok (macskák, rágcsálók, madarak akár haszonállatok) gondozását saját valamint az állatok otthonában egyaránt." image="https://placehold.co/600x400"
             :reverse="true" />
         <ContentBlock breadcrumb="Történetünk" title="Rólunk" subtitle="Második bekezdés tartalma..."
             image="https://placehold.co/600x400" :reverse="false" />

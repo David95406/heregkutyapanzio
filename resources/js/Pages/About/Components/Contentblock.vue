@@ -19,7 +19,31 @@
               class="flex flex-row items-center gap-2 py-2"
             >
               <p v-html="item.svg"></p>
-              <h3 class="text-textBlue text-xl">{{ item.text }}</h3>
+              <h3 class="text-textBlue text-xl">
+                <a 
+                  v-if="item.type === 'phone'"
+                  :href="`tel:${item.text}`" 
+                  class="hover:underline"
+                >
+                  {{ item.text }}
+                </a>
+                <a 
+                  v-else-if="item.type === 'email'"
+                  :href="`mailto:${item.text}`"
+                  class="hover:underline"
+                >
+                  {{ item.text }}
+                </a>
+                <a 
+                  v-else-if="item.type === 'location'"
+                  :href="`https://maps.google.com/?q=${encodeURIComponent(item.text)}`" 
+                  target="_blank"
+                  class="hover:underline"
+                >
+                  {{ item.text }}
+                </a>
+                <span v-else>{{ item.text }}</span>
+              </h3>
             </div>
           </div>
         </div>
