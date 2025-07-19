@@ -14,7 +14,7 @@ const logout = () => {
             <div class="flex items-center space-x-4">
                 <span class="text-xl font-bold text-gray-800">Logo</span>
                 <Link href="/admin" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">Home</Link>
-                <Link href="admin/settings" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">
+                <Link href="/admin/settings" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">
                 Settings
                 </Link>
 

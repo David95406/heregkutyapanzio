@@ -5,13 +5,19 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PolicyController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('/', IndexController::class)->only(['index']);
+// !resource
+Route::get('/', [IndexController::class, 'index']);
 
-Route::resource('rolunk', AboutController::class)->only(['index']);
+Route::get('rolunk', [AboutController::class, 'index']);
 
-Route::resource('foglalas', BookingController::class)->only(['index']);
+Route::get('foglalas', [BookingController::class, 'index']);
+
+Route::get('aszf', [PolicyController::class, 'aszf']);
+
+Route::get('adatkezeles', [PolicyController::class, 'privacy']);
 
 // admin
 /*

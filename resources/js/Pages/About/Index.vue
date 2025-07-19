@@ -1,5 +1,6 @@
 <script setup>
 import ContentBlock from './Components/Contentblock.vue';
+
 const icons = {
     phone: `
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E7AAE" class="size-6">
