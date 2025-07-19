@@ -19,7 +19,9 @@
         "@headlessui/vue": "^1.7.23",
         "@heroicons/vue": "^2.2.0",
         "@inertiajs/vue3": "^2.0.13",
+        "@popperjs/core": "^2.11.8",
         "@vue-hero-icons/outline": "^1.7.2",
+        "v-calendar": "^3.1.2",
         "ziggy-js": "^2.5.3"
     }
 }
