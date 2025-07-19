@@ -6,6 +6,7 @@ import { route } from 'ziggy-js';
 import { toMySqlDateTime } from '../../utils';
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
+import { getDayFromDate } from '../../utils';
 
 const props = defineProps({
     blockedDates: Array
@@ -29,12 +30,8 @@ const disabledDates = ref([
     ...props.blockedDates
 ]);
 
-const convertDate = (date) => {
-    return new Date(date).getDate()
-}
-
-const foglalasTipusa = computed(() => {
-    return convertDate(range.value.start) == convertDate(range.value.end) ? "Napközi" : "Panzió"
+const foglalasTipusa = computed(() => { // kodISM! Admin/Index
+    return getDayFromDate(range.value.start) == getDayFromDate(range.value.end) ? "Napközi" : "Panzió"
 })
 
 const bookingForm = useForm({
