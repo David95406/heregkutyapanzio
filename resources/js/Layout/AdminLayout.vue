@@ -13,15 +13,22 @@ const logout = () => {
         <nav class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <span class="text-xl font-bold text-gray-800">Logo</span>
-                <Link href="/admin" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">Home</Link>
+                <Link href="/admin" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">
+                Kezdőlap
+                </Link>
+
                 <Link href="/admin/settings" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">
-                Settings
+                Beállítások
+                </Link>
+
+                <Link href="/admin/services">
+                Szolgáltatások
                 </Link>
 
             </div>
             <div>
                 <button @click="logout"
-                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Logout</button>
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Kijelentkezés</button>
             </div>
         </nav>
     </header>
@@ -29,7 +36,7 @@ const logout = () => {
         <slot></slot>
     </main>
     <footer>
-        
+
     </footer>
 </template>
 

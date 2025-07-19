@@ -7,14 +7,18 @@ import { Link, usePage } from '@inertiajs/vue3'
 const page = usePage()
 const currentPageComponent = computed(() => page.component)
 
-const navigation = [
-    { name: 'Kezdőlap', href: "/", component: "Index/Index" },
-    { name: 'Rólunk', href: '/rolunk', component: "About/Index" },
-    { name: 'Foglalás', href: '/foglalas', component: "Booking/Index" },
-].map((page) => ({
-    ...page,
-    current: page.component === currentPageComponent.value
-}))
+console.log(currentPageComponent.value)
+
+const navigation = computed(() => {
+    return [
+        { name: 'Kezdőlap', href: "/", component: "Index/Index" },
+        { name: 'Rólunk', href: '/rolunk', component: "About/Index" },
+        { name: 'Foglalás', href: '/foglalas', component: "Booking/Index" },
+    ].map((page) => ({
+        ...page,
+        current: page.component === currentPageComponent.value
+    }))
+})
 
 </script>
 <template>
@@ -25,7 +29,7 @@ const navigation = [
                 <div class="flex items-center flex-shrink-0">
                     <img class="h-10 w-auto" src="https://placehold.co/100x100" alt="Company Logo">
                 </div>
-                
+
                 <!-- Desktop navigation -->
                 <div class="hidden tablet:flex items-center justify-center flex-1">
                     <div class="flex space-x-4 tablet:space-x-6 desktop:space-x-8">
@@ -33,13 +37,14 @@ const navigation = [
                             class="relative manrope-bold tracking-widest text-lg tablet:text-xl desktop:text-2xl pb-1 group transition-colors duration-300"
                             :class="[item.current ? 'text-black' : 'text-gray-400 hover:text-black']"
                             :aria-current="item.current ? 'page' : undefined">
-                            {{ item.name }}
-                            <div class="absolute bottom-0 right-1 w-1/2 h-1 transition-colors duration-300"
-                                :class="[item.current ? 'bg-orange-500' : 'bg-transparent group-hover:bg-orange-500']"></div>
+                        {{ item.name }}
+                        <div class="absolute bottom-0 right-1 w-1/2 h-1 transition-colors duration-300"
+                            :class="[item.current ? 'bg-orange-500' : 'bg-transparent group-hover:bg-orange-500']">
+                        </div>
                         </Link>
                     </div>
                 </div>
-                
+
                 <!-- Mobile menu button -->
                 <div class="tablet:hidden">
                     <DisclosureButton
@@ -55,15 +60,14 @@ const navigation = [
         <!-- Mobile menu panel -->
         <DisclosurePanel class="tablet:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href"
-                    :class="[item.current ? 'text-black' : 'text-gray-600 hover:bg-gray-100 hover:text-black', 
+                <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'text-black' : 'text-gray-600 hover:bg-gray-100 hover:text-black',
                     'block px-3 py-2 rounded-md text-base font-medium relative group']"
                     :aria-current="item.current ? 'page' : undefined">
                     {{ item.name }}
                     <div class="absolute bottom-0 ms-9 w-1/12 h-1 transition-colors duration-300"
-                                :class="[item.current ? 'bg-orange-500' : 'bg-transparent group-hover:bg-orange-500']"></div>
+                        :class="[item.current ? 'bg-orange-500' : 'bg-transparent group-hover:bg-orange-500']"></div>
                 </DisclosureButton>
-                
+
             </div>
         </DisclosurePanel>
     </Disclosure>
