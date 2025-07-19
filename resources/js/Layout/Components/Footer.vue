@@ -1,5 +1,5 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -40,9 +40,9 @@ import { Link, usePage } from '@inertiajs/vue3'
             <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-sm">&copy; {{ new Date().getFullYear() }} Héreg Kutyapanzió. Minden jog fenntartva.</p>
                 <div class="mt-4 md:mt-0 text-sm">
-                    <a href="/adatkezeles" class="hover:text-primary transition-colors">Adatkezelési tájékoztató</a>
+                    <Link href="/adatkezeles" class="hover:text-primary transition-colors">Adatkezelési tájékoztató</Link>
                     <span class="mx-2">|</span>
-                    <a href="/aszf" class="hover:text-primary transition-colors">ÁSZF</a>
+                    <Link href="/aszf" class="hover:text-primary transition-colors">ÁSZF</Link>
                 </div>
             </div>
         </div>
