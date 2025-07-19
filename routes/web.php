@@ -12,7 +12,7 @@ Route::resource('/', IndexController::class)->only(['index']);
 
 Route::resource('rolunk', AboutController::class)->only(['index']);
 
-Route::resource('foglalas', BookingController::class)->only(['index']);
+Route::resource('foglalas', BookingController::class)->only(['index', 'store']);
 
 // admin
 Route::middleware('guest:admin')->prefix('admin')->group(function () {

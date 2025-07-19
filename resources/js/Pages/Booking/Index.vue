@@ -1,36 +1,62 @@
 <script setup>
+import { useForm } from '@inertiajs/vue3';
 import StepCard from './Components/StepCard.vue';
 import { ref, computed, reactive } from 'vue';
+import { route } from 'ziggy-js';
+import { toMySqlDateTime } from '../../utils';
+
+const props = defineProps({
+    blockedDates: Array
+})
+
 const range = ref({
-  start: null,
-  end: null,
+    start: null,
+    end: null,
 });
+
 const attrs = ref([
-  {
-    key: 'full',
-    highlight: 'green',
-    dates: new Date(),
-  },
-]);
-const disabledDates = ref([
-    // Disable dates from past to today
-    { 
-        start: [null],
-        end: new Date(new Date().setDate(new Date().getDate()))
-    },
-    // Disable dates from 2 months in the future onwards
     {
-        start: new Date(new Date().setMonth(new Date().getMonth() + 2)),
-        end: [null]
-    }
+        key: 'full',
+        highlight: 'green',
+        dates: new Date(),
+    },
+]);
+
+const disabledDates = ref([
+    // Default blocked dates
+    ...props.blockedDates
 ]);
 
 const convertDate = (date) => {
     return new Date(date).getDate()
 }
-const foglalasTipusa = computed(()=>{
+
+const foglalasTipusa = computed(() => {
     return convertDate(range.value.start) == convertDate(range.value.end) ? "Napközi" : "Panzió"
 })
+
+const bookingForm = useForm({
+    name: "",
+    email: "",
+    phone: "",
+    description: "",
+    start_date: null,
+    end_date: null,
+})
+
+const submitForm = () => {
+    bookingForm.start_date = toMySqlDateTime(range.value.start)
+    bookingForm.end_date = toMySqlDateTime(range.value.end)
+
+    bookingForm.post(route("foglalas.store"), {
+        onSuccess: () => {
+            alert("siker")
+        },
+        onError: (error) => {
+            alert(error.date)
+        }
+    })
+}
 </script>
 <template>
     <section>
@@ -46,34 +72,40 @@ const foglalasTipusa = computed(()=>{
                 </div>
             </section>
             <section class="w-full @h-1/2 bg-light-blue flex justify-evenly manrope-normal">
-                <VDatePicker mode="dateTime" v-model.range="range" :attributes='attrs' :timezone="timezone" :disabled-dates="disabledDates"/>
+                <VDatePicker mode="dateTime" v-model.range="range" :attributes='attrs' :disabled-dates="disabledDates"
+                    :min-date="new Date()" :max-date="new Date(new Date().setMonth(new Date().getMonth() + 2))" />
                 <div v-if="range.start">
-                    <form class="p-4 bg-white rounded-lg shadow-md max-w-md w-full">
+                    <form @submit.prevent="submitForm" class="p-4 bg-white rounded-lg shadow-md max-w-md w-full">
                         <h2 class="text-2xl manrope-bold text-textBlue mb-4">Foglalási adatok</h2>
                         <div class="mb-4 manrope-bold text-textBlue">
                             <h1>Típus: <span>{{ foglalasTipusa }}</span></h1>
                         </div>
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium text-textBlue mb-1">Név</label>
-                            <input type="text" id="name" v-model="name" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" id="name" v-model="bookingForm.name"
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
-                        
+
                         <div class="mb-4">
                             <label for="email" class="block text-sm font-medium text-textBlue mb-1">Email</label>
-                            <input type="email" id="email" v-model="email" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="email" id="email" v-model="bookingForm.email"
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
-                        
+
                         <div class="mb-4">
                             <label for="phone" class="block text-sm font-medium text-textBlue mb-1">Telefonszám</label>
-                            <input type="tel" id="phone" v-model="phone" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="tel" id="phone" v-model="bookingForm.phone"
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
-                        
+
                         <div class="mb-4">
                             <label for="message" class="block text-sm font-medium text-textBlue mb-1">Megjegyzés</label>
-                            <textarea id="message" v-model="message" rows="3" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            <textarea id="message" v-model="bookingForm.description" rows="3"
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                         </div>
-                        
-                        <button type="submit" class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-300" disabled>
+
+                        <button type="submit"
+                            class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-300">
                             Foglalás küldése
                         </button>
                     </form>

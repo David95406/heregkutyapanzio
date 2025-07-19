@@ -16,10 +16,11 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('email');
-            $table->string('tel', 15);
+            $table->string('phone', 15);
             $table->text('description');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->boolean('accepted');
         });
     }
 
