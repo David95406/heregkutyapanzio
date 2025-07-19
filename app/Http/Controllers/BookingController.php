@@ -29,11 +29,11 @@ class BookingController extends Controller
             ]);
 
             $isBlocked = BlockedDate::whereDate('date', '>=', $validatedData['start_date'])
-                                     ->whereDate('date', '<=', $validatedData['end_date'])
-                                     ->exists();
+                                    ->whereDate('date', '<=', $validatedData['end_date'])
+                                    ->exists();
 
             if ($isBlocked) {
-                return redirect()->back()->withErrors(['date' => 'A kiválasztott időszakban van olyan nap, ami nem foglalható.'])->withInput();
+                return redirect()->back()->withErrors(['error' => 'A kiválasztott időszakban van olyan nap, ami nem foglalható.'])->withInput();
             }
 
             Booking::create($validatedData + ['accepted' => false]);
