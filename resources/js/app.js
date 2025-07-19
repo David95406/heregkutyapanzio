@@ -3,6 +3,8 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from 'ziggy-js';
 import MainLayout from './Layout/MainLayout.vue';
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
 
 createInertiaApp({
   resolve: name => {
@@ -27,6 +29,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue)
+      .use(VCalendar, {})
       .mount(el);
   },
 });
