@@ -3,6 +3,7 @@ import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 import AdminLayout from '../../Layout/AdminLayout.vue';
 import { computed } from 'vue';
+import { getDayFromDate } from '../../utils';
 
 defineOptions({
   layout: AdminLayout
@@ -12,7 +13,12 @@ const props = defineProps({
   bookings: Array
 })
 
-const bookings = computed(() => props.bookings.sort((b1, b2) => new Date(b2.created_at) - new Date(b1.created_at)))
+const getType = (booking) => {
+  return getDayFromDate(booking.start_date) == getDayFromDate(booking.end_date) ? "Napközi" : "Panzió"
+}
+
+const bookings = computed(() => props.bookings.sort((b1, b2) => new Date(b2.created_at) - new Date(b1.created_at))
+  .map((booking) => ({...booking, type: getType(booking)})))
 
 const redirectToHome = (() => {
   router.get(route('index'))

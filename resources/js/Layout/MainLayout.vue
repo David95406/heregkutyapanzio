@@ -1,7 +1,6 @@
 <script setup>
 import Navigation from './Components/Navigation.vue';
 import Footer from './Components/Footer.vue';
-import { usePage } from '@inertiajs/vue3';
 </script>
 
 <template>
