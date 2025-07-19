@@ -2,9 +2,10 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
+import EmptyLayout from '../../../Layout/EmptyLayout.vue';
 
 defineOptions({
-  layout: undefined
+  layout: EmptyLayout
 })
 
 const adminForm = useForm({
