@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     public function index() {
-        return inertia("Index/Index");
+
+        $graphApiData = array();
+
+        return inertia("Index/Index", [
+            "graphApiData" => $graphApiData
+        ]);
     }
 }
