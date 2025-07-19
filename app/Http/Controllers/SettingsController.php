@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class SettingsController extends Controller
+{
+    public function index() {
+        return inertia("Admin/Settings/Index");
+    }
+
+    public function update(Request $request) {
+        return;
+    }
+}
