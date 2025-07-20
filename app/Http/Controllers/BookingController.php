@@ -36,7 +36,7 @@ class BookingController extends Controller
                 return redirect()->back()->withErrors(['error' => 'A kiválasztott időszakban van olyan nap, ami nem foglalható.'])->withInput();
             }
 
-            Booking::create($validatedData + ['accepted' => false]);
+            Booking::create($validatedData + ['accepted' => null]);
         
             return redirect()->back()->with('success', 'Foglalás sikeresen elküldve!');
         }  catch (\Illuminate\Validation\ValidationException $e) {

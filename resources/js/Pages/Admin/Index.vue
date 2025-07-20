@@ -5,25 +5,6 @@ import AdminLayout from '../../Layout/AdminLayout.vue';
 import { computed, ref } from 'vue';
 import { getBookingType } from '../../utils';
 
-const bookingStatuses = ref(new Map())
-
-const accept = (bookingId) => {
-  bookingStatuses.value.set(bookingId, 'accepted')
-}
-
-const notaccept = (bookingId) => {
-  bookingStatuses.value.set(bookingId, 'rejected')
-}
-
-const getBookingStatus = (bookingId) => {
-  return bookingStatuses.value.get(bookingId) || null
-}
-
-const getBookingStatusText = (bookingId) => {
-  const status = getBookingStatus(bookingId)
-  return status === 'accepted' ? 'Elfogadva' : 'Elutasítva'
-}
-
 defineOptions({
   layout: AdminLayout
 })
@@ -32,8 +13,33 @@ const props = defineProps({
   bookings: Array
 })
 
+const bookingStatuses = ref(new Map())
+
+//rename!
+const accept = (bookingId) => {
+  router.patch(route("admin.booking.accept", { booking: bookingId }), {}, {
+    preserveScroll: true,
+  });
+}
+
+const deny = (bookingId) => {
+  if (confirm('Biztosan elutasítja?')) {
+    router.patch(route("admin.booking.deny", { booking: bookingId }), {}, {
+      preserveScroll: true,
+    });
+  }
+}
+
+const getBookingStatus = (bookingId) => {
+  return bookingStatuses.value.get(bookingId) || null
+}
+
+const getBookingStatusText = (booking) => {
+  return booking.accepted ? 'Elfogadva' : 'Elutasítva'
+}
+
 const bookings = computed(() => props.bookings.sort((b1, b2) => new Date(b2.created_at) - new Date(b1.created_at))
-  .map((booking) => ({...booking, type: getBookingType(booking.start_date, booking.end_date)})))
+  .map((booking) => ({ ...booking, type: getBookingType(booking.start_date, booking.end_date) })))
 
 const redirectToHome = (() => {
   router.get(route('index'))
@@ -49,8 +55,10 @@ const redirectToSettings = () => {
     <h1 class="text-2xl font-bold mb-4">Admin</h1>
     <h2 class="text-xl font-semibold mb-6">Foglalások</h2>
     <div class="space-x-4">
-      <button @click="redirectToHome" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Vissza a főoldalra</button>
-      <button @click="redirectToSettings" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Settings</button>
+      <button @click="redirectToHome" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Vissza a
+        főoldalra</button>
+      <button @click="redirectToSettings"
+        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Settings</button>
     </div>
   </div>
   <div class="overflow-x-auto mt-6">
@@ -76,16 +84,24 @@ const redirectToSettings = () => {
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.phone }}</td>
           <td class="px-4 py-3 text-sm text-gray-700 max-w-xs truncate">{{ booking.description }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">
-            <span class="px-2 py-1 text-xs rounded-full" :class="booking.type === 'Napközi' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'">
+            <span class="px-2 py-1 text-xs rounded-full"
+              :class="booking.type === 'Napközi' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'">
               {{ booking.type }}
             </span>
           </td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.start_date }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.end_date }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm space-x-2">
-            <button v-if="!getBookingStatus(booking.id)" @click="accept(booking.id)" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition">Elfogadás</button>
-            <button v-if="!getBookingStatus(booking.id)" @click="notaccept(booking.id)" class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">Elutasítás</button>
-            <p v-else :class="getBookingStatusText(booking.id) === 'Elfogadva' ? 'text-green-400' : 'text-red-400'">{{booking.accepted}}</p>
+            <div v-if="booking.accepted == null">
+              <button v-if="!getBookingStatus(booking.id)" @click="accept(booking.id)"
+                class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition">Elfogadás</button>
+              <button v-if="!getBookingStatus(booking.id)" @click="deny(booking.id)"
+                class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">Elutasítás</button>
+            </div>
+            <div v-else>
+              <p :class="booking.accepted ? 'text-green-400' : 'text-red-400'">
+                {{ getBookingStatusText(booking) }}</p>
+            </div>
           </td>
         </tr>
       </tbody>

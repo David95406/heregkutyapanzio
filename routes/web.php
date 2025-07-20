@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminBookingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\IndexController;
@@ -13,7 +14,7 @@ Route::resource('/', IndexController::class)->only(['index']);
 
 Route::resource('rolunk', AboutController::class)->only(['index']);
 
-Route::resource('foglalas', BookingController::class)->only(['index', 'store', 'update', 'destroy']);
+Route::resource('foglalas', BookingController::class)->only(['index', 'store']);
 
 Route::get('aszf', [PolicyController::class, 'aszf']);
 
@@ -30,4 +31,9 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::resource('services', ServiceController::class)->only(['index', 'update']);
     Route::get('settings', [AdminController::class, 'settings'])->name('admin.settings');
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+    //booking
+    Route::put('booking/{booking}', [AdminBookingController::class, 'update'])->name('admin.booking.update');
+    Route::delete('booking/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');
+    Route::patch('booking/{booking}/accept', [AdminBookingController::class, 'accept'])->name('admin.booking.accept');
+    Route::patch('booking/{booking}/deny', [AdminBookingController::class, 'deny'])->name('admin.booking.deny');
 });
