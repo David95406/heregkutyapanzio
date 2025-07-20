@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {

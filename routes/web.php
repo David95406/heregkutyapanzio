@@ -15,6 +15,7 @@ Route::resource('/', IndexController::class)->only(['index']);
 Route::resource('rolunk', AboutController::class)->only(['index']);
 
 Route::resource('foglalas', BookingController::class)->only(['index', 'store']);
+Route::get('foglalas/verify/{token}', [BookingController::class, 'verify'])->name('booking.verify');
 
 Route::get('aszf', [PolicyController::class, 'aszf']);
 

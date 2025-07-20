@@ -38,8 +38,12 @@ const getBookingStatusText = (booking) => {
   return booking.accepted ? 'Elfogadva' : 'Elutasítva'
 }
 
+const getVerificationType = (verified_at) => {
+  return verified_at ? "Megerősített" : "Nem megerősített"
+}
+
 const bookings = computed(() => props.bookings.sort((b1, b2) => new Date(b2.created_at) - new Date(b1.created_at))
-  .map((booking) => ({ ...booking, type: getBookingType(booking.start_date, booking.end_date) })))
+  .map((booking) => ({ ...booking, type: getBookingType(booking.start_date, booking.end_date), emailVerified: getVerificationType(booking.verified_at) })))
 
 const redirectToHome = (() => {
   router.get(route('index'))
@@ -73,6 +77,8 @@ const redirectToSettings = () => {
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Típus</th>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kezdeti dátum</th>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vége dátum</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Megerősített email
+          </th>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Műveletek</th>
         </tr>
       </thead>
@@ -91,6 +97,7 @@ const redirectToSettings = () => {
           </td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.start_date }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.end_date }}</td>
+          <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.emailVerified }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm space-x-2">
             <div v-if="booking.accepted == null">
               <button v-if="!getBookingStatus(booking.id)" @click="accept(booking.id)"
