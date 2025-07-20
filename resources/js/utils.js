@@ -5,3 +5,7 @@ export function toMySqlDateTime(date) {
 export function getDayFromDate(date) {
     return new Date(date).getDate()
 }
+
+export function getBookingType(start, end) {
+    return getDayFromDate(start) == getDayFromDate(end) ? "Napközi" : "Panzió"
+}
