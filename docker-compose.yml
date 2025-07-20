@@ -67,6 +67,9 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
+    networks:
+      sail:
+        ipv4_address: 192.168.101.24
 
 networks:
   sail:

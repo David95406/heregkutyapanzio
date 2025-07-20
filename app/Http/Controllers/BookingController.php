@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestEmail;
 use App\Models\BlockedDate;
 use App\Models\Booking;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -38,6 +40,13 @@ class BookingController extends Controller
 
             Booking::create($validatedData + ['accepted' => false]);
         
+            // email kuldes
+            try {
+                Mail::to($validatedData['email'])->send(new TestEmail($validatedData['name']));
+            } catch (Exception $e) {
+                dd('Mail sending failed: ' . $e->getMessage());
+            }
+
             return redirect()->back()->with('success', 'Foglalás sikeresen elküldve!');
         }  catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
