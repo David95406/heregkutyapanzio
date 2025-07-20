@@ -46,4 +46,10 @@ class BookingController extends Controller
         }
         
     }
+    public function update(Request $request) {
+        dd($request);
+    }
+    public function destroy(Request $request) {
+        dd($request);
+    }
 }

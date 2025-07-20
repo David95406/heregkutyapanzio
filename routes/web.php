@@ -13,7 +13,7 @@ Route::resource('/', IndexController::class)->only(['index']);
 
 Route::resource('rolunk', AboutController::class)->only(['index']);
 
-Route::resource('foglalas', BookingController::class)->only(['index', 'store']);
+Route::resource('foglalas', BookingController::class)->only(['index', 'store', 'update', 'destroy']);
 
 Route::get('aszf', [PolicyController::class, 'aszf']);
 
