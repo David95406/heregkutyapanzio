@@ -38,7 +38,7 @@ class BookingController extends Controller
                 return redirect()->back()->withErrors(['error' => 'A kiválasztott időszakban van olyan nap, ami nem foglalható.'])->withInput();
             }
 
-            Booking::create($validatedData + ['accepted' => false]);
+            Booking::create($validatedData + ['accepted' => null]);
         
             // email kuldes
             try {
@@ -54,5 +54,11 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'Hiba történt a foglalás során. Kérjük, próbálja újra.');
         }
         
+    }
+    public function update(Request $request) {
+        dd($request);
+    }
+    public function destroy(Request $request) {
+        dd($request);
     }
 }

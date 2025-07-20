@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function index() {
-        $bookings = Booking::all()->makeHidden(['id', 'updated_at']);
+        $bookings = Booking::all()->makeHidden(['updated_at']);
 
         return inertia("Admin/Index", [
             "bookings" => $bookings

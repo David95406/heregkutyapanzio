@@ -100,25 +100,25 @@ const submitForm = () => {
                         </div>
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium text-textBlue mb-1">Név</label>
-                            <input type="text" id="name" v-model="bookingForm.name"
+                            <input type="text" id="name" v-model="bookingForm.name" required
                                 class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
 
                         <div class="mb-4">
                             <label for="email" class="block text-sm font-medium text-textBlue mb-1">Email</label>
-                            <input type="email" id="email" v-model="bookingForm.email"
+                            <input type="email" id="email" v-model="bookingForm.email" required
                                 class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
 
                         <div class="mb-4">
                             <label for="phone" class="block text-sm font-medium text-textBlue mb-1">Telefonszám</label>
-                            <input type="tel" id="phone" v-model="bookingForm.phone"
+                            <input type="tel" id="phone" v-model="bookingForm.phone" required
                                 class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
 
                         <div class="mb-4">
                             <label for="message" class="block text-sm font-medium text-textBlue mb-1">Megjegyzés</label>
-                            <textarea id="message" v-model="bookingForm.description" rows="3"
+                            <textarea id="message" v-model="bookingForm.description" rows="3" required
                                 class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                         </div>
 
@@ -134,18 +134,27 @@ const submitForm = () => {
             <section class="flex flex-col w-full bg-light-blue @h-1/2">
                 <p class="p-4 text-textBlue">Foglalás > <span class="font-bold uppercase">Gyik</span></p>
                 <div class="grid grid-cols-1 tablet:grid-cols-2 gap-4 p-5 w-full h-full">
-                    <StepCard step="1." title="Hogyan mondhatom le" />
-                    <StepCard step="2." title="Milyen fizetési lehetősgek vannak" />
-                    <StepCard step="4." title="Mennyi időt vesz igénybe" />
+                    <StepCard step="1." title="Hogyan mondhatom le a foglalást?"
+                        description="A lemondáshoz vedd fel velünk a kapcsolatot emailben vagy telefonon. Kérjük, lehetőleg legalább 24 órával az érkezés előtt jelezd a módosítást vagy törlést." />
+                    <StepCard step="2." title="Milyen fizetési lehetőségek vannak?"
+                        description="A fizetés történhet előre utalással vagy a helyszínen készpénzben. Az oldalon történő fizetés jelenleg nem elérhető." />
+                    <StepCard step="3." title="Mit érdemes hozni a kutyámnak?"
+                        description="Ajánlott hozni a kutya saját fekhelyét, játékát és az otthon megszokott eledelét. Ha van gyógyszere vagy egyéb fontos tudnivaló, kérjük, jelezd előre." />
+                    <StepCard step="4." title="Mennyi időt vesz igénybe a foglalás?"
+                        description="A foglalási folyamat mindössze néhány percet vesz igénybe, és gyors visszaigazolást küldünk a megadott elérhetőségeidre." />
                 </div>
             </section>
             <section class="flex flex-col w-full bg-light-blue @h-1/2">
                 <p class="p-4 text-textBlue">Foglalás > <span class="font-bold">Segítség</span></p>
                 <div class="grid grid-cols-1 tablet:grid-cols-2 gap-4 p-5 w-full h-full">
-                    <StepCard step="1." title="Dátum választása" />
-                    <StepCard step="2." title="Adatok megadása" />
-                    <StepCard step="4." title="Teszt" />
-                    <StepCard step="3." title="Teszt" />
+                    <StepCard step="1." title="Időpont kiválasztása"
+                        description="Válaszd ki az érkezés és távozás napját a naptárban. A zöld színű napokon még van szabad férőhely, a pirosak már foglaltak. A színtelen napok pedig teljesen üresek." />
+                    <StepCard step="2." title="Napközi vagy panzió?"
+                        description="Döntsd el, hogy csak napközbeni ellátást szeretnél, vagy éjszakai szállást is. Dupla kattintás egy dátumra napközi, Szimplával pedig a panzió kezdeti napja adható meg. Az időpont kiválasztásánál az AM a délelőttöt jelöli míg a PM a délutánt" />
+                    <StepCard step="4." title="Foglalás elküldése"
+                        description="Kattints a 'Foglalás küldése' gombra a véglegesítéshez. Ezután visszaigazoló emailt küldünk és felvesszük veled a kapcsolatot a további teendőkről." />
+                    <StepCard step="3." title="Személyes adatok megadása"
+                        description="Add meg neved, email címed, telefonszámod és bármilyen egyéb kérést a foglalási űrlapon." />
                 </div>
             </section>
         </div>
