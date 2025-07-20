@@ -24,13 +24,23 @@ class BookingController extends Controller
     public function store(Request $request) {
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'phone' => 'required|string|max:15',
-                'description' => 'nullable|string',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date|after_or_equal:start_date',
-            ]);
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:15',
+            'description' => 'nullable|string',
+            'start_date' => [
+                'required',
+                'date',
+                'after_or_equal:today',
+                'before_or_equal:'.now()->addMonths(2)->format('Y-m-d')
+            ],
+            'end_date' => [
+                'required',
+                'date',
+                'after_or_equal:start_date',
+                'before_or_equal:'.now()->addMonths(2)->format('Y-m-d')
+            ],
+        ]);
 
             $isBlocked = BlockedDate::whereDate('date', '>=', $validatedData['start_date'])
                                     ->whereDate('date', '<=', $validatedData['end_date'])
@@ -77,7 +87,10 @@ class BookingController extends Controller
             'verification_token' => null,
         ])->save();
 
-        return redirect('/')->with('success', 'Foglalását sikeresen megerősítette! Hamarosan felvesszük Önnel a kapcsolatot.');
+        //return redirect('/')->with('success', 'Foglalását sikeresen megerősítette! Hamarosan felvesszük Önnel a kapcsolatot.');
+        return inertia('Booking/Verified/Index', [
+            'booking' => $booking
+        ]);
     }
 
     public function update(Request $request) {

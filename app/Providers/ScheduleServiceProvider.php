@@ -22,6 +22,7 @@ class ScheduleServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
             $schedule->command('bookings:prune-unverified')->daily();
+            $schedule->command('bookings:delete-old')->weekly();
         });
     }
 }

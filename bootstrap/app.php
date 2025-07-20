@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withProviders([
+    ->withProviders([ // +napi egyszer regi foglalasok torlese
         ScheduleServiceProvider::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {

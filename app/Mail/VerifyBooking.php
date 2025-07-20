@@ -25,7 +25,7 @@ class VerifyBooking extends Mailable
     {
         $this->booking = $booking;
         $this->verificationUrl = URL::temporarySignedRoute(
-            'booking.verify', now()->addMinutes(60), ['token' => $booking->verification_token]
+            'booking.verify', now()->addDay(2), ['token' => $booking->verification_token]
         );
     }
 
