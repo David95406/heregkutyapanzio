@@ -17,5 +17,7 @@ class Booking extends Model
         'start_date',
         'end_date',
         'accepted',
+        'verification_token', 
+        'verified_at',
     ];
 }
