@@ -13,6 +13,56 @@ const props = defineProps({
   bookings: Array
 })
 
+const acceptedVerified = computed(() => {
+  return props.bookings
+    .filter((booking) => booking.accepted && booking.verified_at)
+    .flatMap(booking => {
+      const dates = [];
+
+      const startDate = {
+        date: new Date(booking.start_date),
+        name: booking.name
+      }
+      const endDate = {
+        date: new Date(booking.end_date),
+        name: booking.name
+      }
+
+      while (startDate.date <= endDate.date) {
+        dates.push({
+          date: new Date(startDate.date),
+          name: booking.name
+        });
+        startDate.date.setDate(startDate.date.getDate() + 1);
+      }
+
+      return dates;
+    });
+})
+const dayCare = computed(()=>{
+  return 
+})
+console.log(acceptedVerified.value)
+
+const range = ref({
+  start: null,
+  end: null,
+});
+
+const attrs = ref(
+  acceptedVerified.value.map((dateInfo, index) => ({
+    key: index,
+    highlight: 'green',
+    dates: new Date(dateInfo.date),
+    popover: {
+      label: dateInfo.name
+    }
+  })),
+  {
+    
+  }
+);
+
 const bookingStatuses = ref(new Map())
 
 //rename!
@@ -115,6 +165,7 @@ const redirectToSettings = () => {
     </table>
     <h1 v-else class="text-2xl manrope-bold text-center">A foglalási lista üres</h1>
   </div>
+  <VDatePicker mode="date" v-model.range="range" :attributes='attrs' :disabled-dates="disabledDates" />
 </template>
 
 <style scoped></style>
