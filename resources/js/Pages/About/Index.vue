@@ -1,5 +1,5 @@
 <script setup>
-import ContentBlock from './Components/ContentBlock.vue';
+import ContentBlock from './Components/Contentblock.vue';
 
 const icons = {
     phone: `
@@ -21,7 +21,7 @@ const icons = {
 }
 
 const aboutItems = [
-    { svg: icons.phone, text: '+36302250113', type:'phone', },
+    { svg: icons.phone, text: '+3630123123', type:'phone', },
     { svg: icons.mail, text: 'adrianjozsa81@gmail.com', type:'email', },
     { svg: icons.location, text: 'Héreg, Béke u. 34, 2832', type:'location', }
 ]
