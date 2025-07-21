@@ -123,4 +123,15 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Email Address
+    |--------------------------------------------------------------------------
+    |
+    | This value is the email address that will be used to send
+    | booking notifications to the admin.
+    |
+    */
+    'admin_email' => env('BOOKING_ADMIN_EMAIL', 'admin@heregkutyapanzio.hu'),
+
 ];

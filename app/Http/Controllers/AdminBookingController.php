@@ -27,6 +27,10 @@ class AdminBookingController extends Controller
         $this->changeStatus($request, $booking, false);
     }
 
+    public function verify() {
+        dd("ok");
+    }
+
     public function update(Request $request) {
         dd("pass");
     }

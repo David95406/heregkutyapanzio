@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingAdminMail;
 use App\Mail\TestEmail;
 use App\Mail\VerifyBooking;
 use App\Models\BlockedDate;
 use App\Models\Booking;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -86,6 +88,16 @@ class BookingController extends Controller
             'verified_at' => now(),
             'verification_token' => null,
         ])->save();
+
+        // Admin értesítése az új megerősített foglalásról
+        try {
+            Mail::to("adrianjozsa@gmail.com") //config('app.admin_email', 'admin@heregkutyapanzio.hu')
+                ->send(new BookingAdminMail($booking));
+        } catch (\Exception $e) {
+            // Csak naplózza a hibát, de ne szakítsa meg a foglalást
+            dd($e);
+            Log::error('Admin értesítés küldése sikertelen: ' . $e->getMessage());
+        }
 
         //return redirect('/')->with('success', 'Foglalását sikeresen megerősítette! Hamarosan felvesszük Önnel a kapcsolatot.');
         return inertia('Booking/Verified/Index', [
