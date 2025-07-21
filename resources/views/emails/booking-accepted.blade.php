@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Foglalása elfogadva - Hereg Kutyapanzió</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f4f4f4; color: #333333;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td style="padding: 20px 0;">
+                <table align="center" width="600" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: 0 auto;">
+                    <!-- Fejléc -->
+                    <tr>
+                        <td style="background-color: #22c55e; padding: 30px 40px; border-radius: 8px 8px 0 0; text-align: center;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Hereg Kutyapanzió</h1>
+                            <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 18px;">Foglalását elfogadtuk!</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Tartalom -->
+                    <tr>
+                        <td style="padding: 40px;">
+                            <h2 style="margin-top: 0; color: #333333;">Kedves {{ $booking->name }}!</h2>
+                            
+                            <p style="margin-bottom: 25px; line-height: 1.5; font-size: 16px;">
+                                Örömmel értesítjük, hogy foglalását <strong>elfogadtuk</strong> és várjuk Önt és kedvencét a megadott időpontban!
+                            </p>
+                            
+                            <table width="100%" style="border-collapse: collapse; margin-bottom: 30px; border: 1px solid #e5e7eb;">
+                                <tr>
+                                    <th colspan="2" style="background-color: #f3f4f6; padding: 12px 15px; text-align: left; font-size: 18px; border-bottom: 1px solid #e5e7eb;">
+                                        Foglalás részletei
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb; width: 40%;"><strong>Foglalás azonosítója:</strong></td>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;">{{ $booking->id }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;"><strong>Időszak:</strong></td>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;">{{ date('Y. m. d.', strtotime($booking->start_date)) }} - {{ date('Y. m. d.', strtotime($booking->end_date)) }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;"><strong>Név:</strong></td>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;">{{ $booking->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;"><strong>Email:</strong></td>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;">{{ $booking->email }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;"><strong>Telefonszám:</strong></td>
+                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;">{{ $booking->phone }}</td>
+                                </tr>
+                                @if($booking->description)
+                                <tr>
+                                    <td style="padding: 12px 15px;"><strong>Megjegyzés:</strong></td>
+                                    <td style="padding: 12px 15px;">{{ $booking->description }}</td>
+                                </tr>
+                                @endif
+                            </table>
+                            
+                            <h3 style="color: #333333;">Fontos tudnivalók</h3>
+                            
+                            <ul style="margin-bottom: 25px; line-height: 1.5; font-size: 16px;">
+                                <li>Kérjük, érkezzen a megbeszélt időpontban.</li>
+                                <li>Hozza magával kedvence oltási könyvét.</li>
+                                <li>A panzióba való érkezéskor kérjük, hozzon magával pórázt.</li>
+                                <li>Ha bármilyen különleges táplálékot igényel a kutyusa, azt kérjük, biztosítsa a tartózkodás idejére.</li>
+                            </ul>
+                            
+                            <p style="margin-bottom: 25px; line-height: 1.5; font-size: 16px;">
+                                Ha bármilyen kérdése merülne fel, vagy változtatni szeretne a foglalás részletein, kérjük, vegye fel velünk a kapcsolatot telefonon vagy e-mailben.
+                            </p>
+                            
+                            <p style="color: #22c55e; margin-bottom: 0; font-size: 16px; font-weight: bold;">
+                                Köszönjük, hogy a Hereg Kutyapaznziót választotta! Szeretettel várjuk Önt és kedvencét!
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Lábléc -->
+                    <tr>
+                        <td style="background-color: #f3f4f6; padding: 20px; border-radius: 0 0 8px 8px; text-align: center; color: #666666; font-size: 14px;">
+                            <p style="margin: 0 0 10px 0;">
+                                <strong>Hereg Kutyapanzió</strong><br>
+                                Telefon: +36 20 123 4567<br>
+                                Email: info@heregkutyapanzio.hu
+                            </p>
+                            <p style="margin: 0;">
+                                © {{ date('Y') }} Hereg Kutyapanzió - Minden jog fenntartva
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

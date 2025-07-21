@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingAcceptedMail;
+use App\Mail\BookingDeniedMail;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class AdminBookingController extends Controller
 {
@@ -19,16 +23,34 @@ class AdminBookingController extends Controller
         }
     }
 
+    private function sendSuccessBookingMail(Booking $booking) {
+        try {
+            Mail::to($booking->email)->send(new BookingAcceptedMail($booking));
+            return redirect()->back()->with('success', 'Foglalás elfogadva és email értesítés elküldve.');
+        } catch (\Exception $e) {
+            Log::error('Hiba a foglalás elfogadó email küldésekor: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'A foglalás elfogadva, de az email küldése sikertelen.');
+        }
+    }
+
+    private function sendDeniedBookingMail(Booking $booking) {
+        try {
+            Mail::to($booking->email)->send(new BookingDeniedMail($booking));
+            return redirect()->back()->with('success', 'Foglalás elutasítva és értesítő email elküldve.');
+        } catch (\Exception $e) {
+            Log::error('Hiba a foglalás elutasító email küldésekor: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'A foglalás elutasítva, de az értesítő email küldése sikertelen.');
+        }
+    }
+
     public function accept(Request $request, Booking $booking) {
         $this->changeStatus($request, $booking, true);
+        $this->sendSuccessBookingMail($booking);
     }
 
     public function deny(Request $request, Booking $booking) {
         $this->changeStatus($request, $booking, false);
-    }
-
-    public function verify() {
-        dd("ok");
+        $this->sendDeniedBookingMail($booking);
     }
 
     public function update(Request $request) {
