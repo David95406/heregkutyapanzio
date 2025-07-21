@@ -11,6 +11,7 @@ import { getDayFromDate, getBookingType } from '../../utils';
 const props = defineProps({
     blockedDates: Array
 })
+console.log(props.blockedDates)
 
 const range = ref({
     start: null,
@@ -20,8 +21,8 @@ const range = ref({
 const attrs = ref([
     {
         key: 'full',
-        highlight: 'green',
-        dates: new Date(),
+        highlight: 'red',
+        dates: props.blockedDates
     },
 ]);
 
@@ -94,7 +95,7 @@ const submitForm = () => {
             </section>
             <section class="w-full @h-1/2 bg-light-blue flex justify-evenly manrope-normal">
                 <VDatePicker mode="dateTime" v-model.range="range" :attributes='attrs' :disabled-dates="disabledDates"
-                    :min-date="new Date()" :max-date="new Date(new Date().setMonth(new Date().getMonth() + 2))" />
+                    :min-date="new Date(new Date().setDate(new Date().getDate() + 1))" :max-date="new Date(new Date().setMonth(new Date().getMonth() + 2))" />
                 <div v-if="range.start">
                     <form @submit.prevent="submitForm" class="p-4 bg-white rounded-lg shadow-md max-w-md w-full">
                         <h2 class="text-2xl manrope-bold text-textBlue mb-4">Foglalási adatok</h2>
@@ -151,7 +152,7 @@ const submitForm = () => {
                 <p class="p-4 text-textBlue">Foglalás > <span class="font-bold">Segítség</span></p>
                 <div class="grid grid-cols-1 tablet:grid-cols-2 gap-4 p-5 w-full h-full">
                     <StepCard step="1." title="Időpont kiválasztása"
-                        description="Válaszd ki az érkezés és távozás napját a naptárban. A zöld színű napokon még van szabad férőhely, a pirosak már foglaltak. A színtelen napok pedig teljesen üresek." />
+                        description="Válaszd ki az érkezés és távozás napját a naptárban. A piros napok már foglaltak." />
                     <StepCard step="2." title="Napközi vagy panzió?"
                         description="Döntsd el, hogy csak napközbeni ellátást szeretnél, vagy éjszakai szállást is. Dupla kattintás egy dátumra napközi, Szimplával pedig a panzió kezdeti napja adható meg. Az időpont kiválasztásánál az AM a délelőttöt jelöli míg a PM a délutánt" />
                     <StepCard step="4." title="Foglalás elküldése"
