@@ -4,6 +4,7 @@ import { route } from 'ziggy-js';
 import AdminLayout from '../../Layout/AdminLayout.vue';
 import { computed, ref } from 'vue';
 import Booking from '../../classes/Booking';
+import { formatDate } from '../../utils';
 
 defineOptions({
   layout: AdminLayout
@@ -121,7 +122,7 @@ const redirectToSettings = () => {
       </thead>
       <tbody class="divide-y divide-gray-200">
         <tr v-for="booking in bookings" class="hover:bg-gray-50">
-          <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getCreated_at() }}</td>
+          <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ formatDate(booking.getCreated_at()) }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getName() }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getEmail() }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getPhone() }}</td>
@@ -132,8 +133,8 @@ const redirectToSettings = () => {
               {{ booking.getBookingTypeString() }}
             </span>
           </td>
-          <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getStart_date() }}</td>
-          <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getEnd_date() }}</td>
+          <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ formatDate(booking.getStart_date()) }}</td>
+          <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ formatDate(booking.getEnd_date()) }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getVerificationText() }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm space-x-2">
             <div v-if="booking.getAccepted() == null">
