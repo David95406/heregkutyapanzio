@@ -12,34 +12,46 @@ defineOptions({
 const props = defineProps({
   bookings: Array
 })
+const range = ref({
+    start: null,
+    end: null,
+});
 
 const acceptedVerified = computed(() => {
-  return props.bookings
-    .filter((booking) => booking.accepted && booking.verified_at)
-})
-const getBookingIsDayCare = (booking) => {
-  console.log(new Date(booking.start_date).getTime() === new Date(booking.end_date).getTime());
-  return new Date(booking.start_date).getTime() === new Date(booking.end_date).getTime();
-}
+  return props.bookings.filter((booking) => booking.accepted && booking.verified_at);
+});
 
-const attrs = computed(() => 
-  acceptedVerified.value.map((dateInfo, index) => ({
-    key: index,
+const getBookingIsDayCare = (booking) => {
+  // Ensure dates are valid and compare only the date part (ignoring time)
+  const startDate = new Date(booking.start_date);
+  const endDate = new Date(booking.end_date);
+  // Reset time to midnight for accurate date comparison
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
+  const isDayCare = startDate.getTime() === endDate.getTime();
+  console.log(`Booking ${booking.id}: isDayCare = ${isDayCare}`);
+  console.log(isDayCare ? 'blue' : 'green')
+  return isDayCare ? 'blue' : 'green';
+};
+
+const attrs = computed(() => {
+  return acceptedVerified.value.map((booking, index) => ({
+    key: `booking_${booking.id}_${index}`, // Use booking ID and index for unique key
     highlight: {
-      start: { fillMode: 'solid' },
-      base: { fillMode: 'light' },
-      end: { fillMode: 'solid' },
-      color: getBookingIsDayCare(dateInfo) ? "green" : "blue"
+      start: { fillMode: 'solid', color: getBookingIsDayCare(booking)},
+      base: { fillMode: 'light', color: getBookingIsDayCare(booking)},
+      end: { fillMode: 'solid', color: getBookingIsDayCare(booking)},
     },
-    dates: { 
-      start: new Date(dateInfo.start_date), 
-      end: new Date(dateInfo.end_date) 
+    dates: {
+      start: new Date(booking.start_date),
+      end: new Date(booking.end_date),
     },
     popover: {
-      label: dateInfo.name
-    }
-  }))
-);
+      label: booking.name,
+      visibility: 'hover', // Ensure popover shows on hover
+    },
+  }));
+});
 
 const disabledDates = ref([]);
 
