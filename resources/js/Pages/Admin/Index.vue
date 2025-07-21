@@ -16,52 +16,32 @@ const props = defineProps({
 const acceptedVerified = computed(() => {
   return props.bookings
     .filter((booking) => booking.accepted && booking.verified_at)
-    .flatMap(booking => {
-      const dates = [];
-
-      const startDate = {
-        date: new Date(booking.start_date),
-        name: booking.name
-      }
-      const endDate = {
-        date: new Date(booking.end_date),
-        name: booking.name
-      }
-
-      while (startDate.date <= endDate.date) {
-        dates.push({
-          date: new Date(startDate.date),
-          name: booking.name
-        });
-        startDate.date.setDate(startDate.date.getDate() + 1);
-      }
-
-      return dates;
-    });
 })
-const dayCare = computed(()=>{
-  return 
-})
-console.log(acceptedVerified.value)
+const getBookingIsDayCare = (booking) => {
+  console.log(new Date(booking.start_date).getTime() === new Date(booking.end_date).getTime());
+  return new Date(booking.start_date).getTime() === new Date(booking.end_date).getTime();
+}
 
-const range = ref({
-  start: null,
-  end: null,
-});
-
-const attrs = ref(
+const attrs = computed(() => 
   acceptedVerified.value.map((dateInfo, index) => ({
     key: index,
-    highlight: 'green',
-    dates: new Date(dateInfo.date),
+    highlight: {
+      start: { fillMode: 'solid' },
+      base: { fillMode: 'light' },
+      end: { fillMode: 'solid' },
+      color: getBookingIsDayCare(dateInfo) ? "green" : "blue"
+    },
+    dates: { 
+      start: new Date(dateInfo.start_date), 
+      end: new Date(dateInfo.end_date) 
+    },
     popover: {
       label: dateInfo.name
     }
-  })),
-  {
-    
-  }
+  }))
 );
+
+const disabledDates = ref([]);
 
 const bookingStatuses = ref(new Map())
 
@@ -79,7 +59,6 @@ const deny = (bookingId) => {
     });
   }
 }
-
 const getBookingStatus = (bookingId) => {
   return bookingStatuses.value.get(bookingId) || null
 }
