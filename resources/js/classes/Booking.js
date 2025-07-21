@@ -1,3 +1,5 @@
+import { getDayFromDate } from "../utils"
+
 export default class Booking {
     #id
     #created_at
@@ -54,7 +56,7 @@ export default class Booking {
     }
 
     isDayCare() {
-        return this.#start_date == this.#end_date
+        return getDayFromDate(this.#start_date) == getDayFromDate(this.#end_date)
     }
 
     getBookingTypeString() {
