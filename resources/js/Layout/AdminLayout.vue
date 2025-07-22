@@ -25,6 +25,10 @@ const logout = () => {
                 Szolgáltatások
                 </Link>
 
+                <Link href="/admin/blocked-dates">
+                Dátum kezelés
+                </Link>
+
             </div>
             <div>
                 <button @click="logout"

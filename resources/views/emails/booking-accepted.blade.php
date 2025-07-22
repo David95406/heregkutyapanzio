@@ -33,10 +33,6 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb; width: 40%;"><strong>Foglalás azonosítója:</strong></td>
-                                    <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;">{{ $booking->id }}</td>
-                                </tr>
-                                <tr>
                                     <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;"><strong>Időszak:</strong></td>
                                     <td style="padding: 12px 15px; border-bottom: 1px solid #e5e7eb;">{{ date('Y. m. d.', strtotime($booking->start_date)) }} - {{ date('Y. m. d.', strtotime($booking->end_date)) }}</td>
                                 </tr>
