@@ -11,7 +11,6 @@ import { getDayFromDate, getBookingType } from '../../utils';
 const props = defineProps({
     blockedDates: Array
 })
-console.log(props.blockedDates)
 
 const range = ref({
     start: null,
