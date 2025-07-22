@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -10,7 +11,14 @@ class SettingsController extends Controller
         return inertia("Admin/Settings/Index");
     }
 
-    public function update(Request $request) {
-        return;
+    public function updateGraphApiKey(Request $request) {
+        $validatedRequest = $request->validate([
+            "graphApiKey" => 'required|string'
+        ]);
+
+        Setting::where('key', 'graphApiKey')
+            ->update(['value' => $validatedRequest['graphApiKey']]);
+
+        return back()->with('message', 'Graph API kulcs sikeresen frissítve!');
     }
 }

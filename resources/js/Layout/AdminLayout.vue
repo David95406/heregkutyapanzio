@@ -21,10 +21,6 @@ const logout = () => {
                 Beállítások
                 </Link>
 
-                <Link href="/admin/services">
-                Szolgáltatások
-                </Link>
-
                 <Link href="/admin/blocked-dates">
                 Dátum kezelés
                 </Link>

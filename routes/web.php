@@ -8,7 +8,7 @@ use App\Http\Controllers\BlockedDateController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PolicyController;
-use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('/', IndexController::class)->only(['index']);
@@ -29,10 +29,13 @@ Route::middleware('guest:admin')->prefix('admin')->group(function () {
 });
 
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
+    // admin
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-    Route::resource('services', ServiceController::class)->only(['index', 'update']);
-    Route::get('settings', [AdminController::class, 'settings'])->name('admin.settings');
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+    // settings
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::put('settings/graph-api', [SettingsController::class, 'updateGraphApiKey'])->name('settings.update-graph-api');
+    Route::put('settings/change-password', [AdminController::class, 'changePassword'])->name('settings.change-password');
     // booking
     Route::put('booking/{booking}', [AdminBookingController::class, 'update'])->name('admin.booking.update');
     Route::delete('booking/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');
