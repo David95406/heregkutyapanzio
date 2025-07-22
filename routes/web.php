@@ -42,5 +42,5 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::patch('booking/{booking}/accept', [AdminBookingController::class, 'accept'])->name('admin.booking.accept');
     Route::patch('booking/{booking}/deny', [AdminBookingController::class, 'deny'])->name('admin.booking.deny');
     // blocked date
-    Route::resource('blocked-dates', BlockedDateController::class)->only(['store', 'destory', 'index']);
+    Route::resource('blocked-dates', BlockedDateController::class)->only(['store', 'destroy', 'index']);
 });
