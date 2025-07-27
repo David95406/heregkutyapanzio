@@ -3,13 +3,13 @@ import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
-    <section class="bg-gray-100 text-gray-700 manrope-normal">
+    <section class="bg-gradient-to-b from-light-blue to-white text-textBlue manrope-normal">
         <div class="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Logo and Description -->
                 <div class="flex flex-col items-center md:items-start">
                     <img src="/logo.png" alt="Hereg Kutyapanzió" class="h-16 mb-4">
-                    <p class="text-sm">Professzionális kutyapanzió szolgáltatás, ahol kedvence otthon érezheti magát.</p>
+                    <p class="">Professzionális kutyapanzió szolgáltatás, ahol kedvence otthon érezheti magát.</p>
                 </div>
                             
                 <!-- Contact Info -->

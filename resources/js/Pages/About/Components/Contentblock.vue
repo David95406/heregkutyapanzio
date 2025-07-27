@@ -7,10 +7,10 @@
       <div class="p-5">
         <p class="text-textBlue">Rólunk > <span class="font-bold">{{ breadcrumb }}</span></p>
         <div class="flex flex-col flex-grow">
-          <BlurText :text=title :delay="200" class-name="mt-4 manrope-bold text-textBlue text-5xl tracking-widest"
-            animate-by="words" direction="bottom" :threshold="0.1" root-margin="0px" :step-duration="0.35" />
-          <BlurText :text=subtitle :delay="200" class-name="mt-2 text-textBlue"
-            animate-by="words" direction="bottom" :threshold="0.1" root-margin="0px" :step-duration="0.35" />
+          <SplitText :text="title" class-name="mt-4 manrope-bold text-textBlue text-5xl tracking-widest" :delay="0" :duration="0.8" ease="power3.out"
+                split-type="chars" :from="{ opacity: 0, y: 40 }" :to="{ opacity: 1, y: 0 }" :threshold="0.1"
+                root-margin="-100px" text-align="start" />
+          <h3 class="mt-2 text-textBlue">{{ subtitle }}</h3>
           <div v-if="items?.length" class="mt-4 space-y-2">
             <div v-for="item in items" :key="item.text" class="flex flex-row items-center gap-2 py-2">
               <p v-html="item.svg"></p>
@@ -42,8 +42,7 @@
 </template>
 
 <script setup>
-import BlurText from "../../../Components/BlurText.vue";
-import TextType from "../../../Components/TextType.vue";
+import SplitText from "../../../Components/SplitText.vue";
 defineProps({
   title: String,
   subtitle: String,
