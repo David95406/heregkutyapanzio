@@ -25,7 +25,7 @@ import AnimatedContent from '../../../Components/AnimatedContent.vue';
         </section>
     </div>
     <div
-        class="grid grid-cols-1 tablet:grid-cols-3 gap-4 p-5 w-full h-full bg-gradient-to-b from-light-blue to-white justify-items-center">
+        class="grid grid-cols-1 tablet:grid-cols-3 gap-4 p-5 w-full h-full bg-light-blue justify-items-center">
         <div v-for="kartya in 6" :key="kartya">
             <AnimatedContent :distance="100" direction="vertical" :reverse="false" :duration="0.8" ease="power3.out"
             :initial-opacity="0" :animate-opacity="true" :scale="1" :threshold="0.1" :delay="0">

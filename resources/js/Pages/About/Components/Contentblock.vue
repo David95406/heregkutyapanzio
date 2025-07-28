@@ -7,7 +7,7 @@
       <div class="p-5">
         <p class="text-textBlue">Rólunk > <span class="font-bold">{{ breadcrumb }}</span></p>
         <div class="flex flex-col flex-grow">
-          <SplitText :text="title" class-name="mt-4 manrope-bold text-textBlue text-5xl tracking-widest" :delay="0" :duration="0.8" ease="power3.out"
+          <SplitText :text="title" class-name="mt-4 manrope-bold text-textBlue text-4xl tracking-widest" :delay="0" :duration="0.8" ease="power3.out"
                 split-type="chars" :from="{ opacity: 0, y: 40 }" :to="{ opacity: 1, y: 0 }" :threshold="0.1"
                 root-margin="-100px" text-align="start" />
           <h3 class="mt-2 text-textBlue">{{ subtitle }}</h3>
