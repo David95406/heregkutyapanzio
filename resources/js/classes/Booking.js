@@ -39,6 +39,7 @@ export default class Booking {
         this.isDayCare = this.isDayCare.bind(this)
         this.getBookingTypeString = this.getBookingTypeString.bind(this)
         this.getVerificationText = this.getVerificationText.bind(this)
+        this.getAcceptedString = this.getAcceptedString.bind(this)
 
         if (booking) {
             this.setId(booking.id)
@@ -61,6 +62,10 @@ export default class Booking {
 
     getBookingTypeString() {
         return this.isDayCare() ? "Napközi" : "Panzió"
+    }
+
+    getAcceptedString() {
+        return (typeof this.getAccepted() === 'boolean') ? this.getAccepted() ? "Elfogadva" : "Elutasítva" : "Függőben"
     }
 
     getVerificationText() {

@@ -15,7 +15,7 @@ const changePasswordForm = useForm({
   password_confirmation: "",
   reset() {
     this.password = "",
-    this.password_confirmation = ""
+      this.password_confirmation = ""
   }
 })
 
@@ -53,13 +53,12 @@ const changePassword = () => {
   changePasswordForm.put(route("settings.change-password"), {
     onSuccess: () => {
       makeToast("Sikeresen megváltoztattad a jelszavad!")
+      resetForms()
     },
     onError: () => {
       makeToast('Hiba történt a jelszó módosítása során. Kérjük, ellenőrizd az adatokat és próbáld újra!', 'danger');
     }
   })
-
-  resetForms()
 }
 
 const updateGraphApiKey = () => {

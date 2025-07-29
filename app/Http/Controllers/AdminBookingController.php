@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BookingUpdateTypeEnum;
 use App\Mail\BookingAcceptedMail;
 use App\Mail\BookingDeniedMail;
 use App\Models\Booking;
@@ -53,8 +54,29 @@ class AdminBookingController extends Controller
         $this->sendDeniedBookingMail($booking);
     }
 
-    public function update(Request $request) {
-        dd("pass");
+    public function update(Request $request, Booking $booking) {
+        $validatedRequest = $request->validate([
+            "field" => 'required|string',
+            "value" => 'required'
+        ]);
+
+        try {
+            $field = BookingUpdateTypeEnum::from($validatedRequest['field']);
+        } catch (\ValueError $e) {
+            return redirect()->back()->with('error', 'Érvénytelen mező');
+        }
+
+        switch ($field) {
+            case BookingUpdateTypeEnum::START_DATE:
+            case BookingUpdateTypeEnum::END_DATE:
+                if (!strtotime($validatedRequest['value'])) {
+                    return redirect()->back()->with('error', 'Érvénytelen dátum formátum');
+                }
+                break;
+        }
+        
+        $booking->update([$field->value => $validatedRequest['value']]);
+        return redirect()->back()->with('success', 'A foglalás sikeresen frissítve!');
     }
 
     public function destroy(Request $request) {
