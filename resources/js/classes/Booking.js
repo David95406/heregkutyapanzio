@@ -141,7 +141,11 @@ export default class Booking {
     }
 
     setAccepted(accepted) {
-        this.#accepted = accepted
+        if (typeof accepted === 'number') {
+            this.#accepted = !!accepted // boolean convert
+        } else {
+            this.#accepted = null
+        }
     }
 
     getAccepted() {

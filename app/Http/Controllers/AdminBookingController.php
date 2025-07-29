@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BookingUpdateTypeEnum;
 use App\Mail\BookingAcceptedMail;
 use App\Mail\BookingDeniedMail;
+use App\Mail\BookingUpdatedMail;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,16 +67,29 @@ class AdminBookingController extends Controller
             return redirect()->back()->with('error', 'Érvénytelen mező');
         }
 
+        $isEmail = false;
+
         switch ($field) {
             case BookingUpdateTypeEnum::START_DATE:
             case BookingUpdateTypeEnum::END_DATE:
                 if (!strtotime($validatedRequest['value'])) {
                     return redirect()->back()->with('error', 'Érvénytelen dátum formátum');
                 }
+                $isEmail = true; // egyenlore csak datum valtozas utan kuldunk ujra emailt, mas esetben nem
                 break;
         }
 
         $booking->update([$field->value => $validatedRequest['value']]);
+
+        if ($isEmail) {
+            try {
+                Mail::to($booking->email)->send(new BookingUpdatedMail($booking, $field->value));
+            } catch (\Exception $e) {
+                Log::error('Hiba a foglalás frissítéséről szóló email küldésekor: ' . $e->getMessage());
+                return redirect()->back()->with('warning', 'A foglalás frissítve, de az értesítő email küldése sikertelen.');
+            }
+        }
+
         return redirect()->back()->with('success', 'A foglalás sikeresen frissítve!');
     }
 

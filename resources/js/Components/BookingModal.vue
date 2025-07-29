@@ -16,7 +16,7 @@ const props = defineProps({
 // Egyszerűbb hozzáférés a sablonban
 const booking = computed(() => props.booking)
 
-const emit = defineEmits(['exit', 'refresh'])
+const emit = defineEmits(['exit', 'deny', 'accept', 'refresh'])
 
 const isOpen = ref(true);
 
@@ -69,9 +69,8 @@ const updateBooking = (field, content) => {
 
 <template>
   <!-- Modal Backdrop with explicit blur filter -->
-  <div class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center overflow-y-auto"
-    :class="{ 'opacity-100': isOpen, 'opacity-0': !isOpen }" @click="closeModal"
-    style="transition: opacity 0.3s ease; backdrop-filter: blur(8px);">
+  <div class="fixed inset-0 backdrop-blur-overlay z-40 flex items-center justify-center overflow-y-auto"
+    :class="{ 'opacity-100': isOpen, 'opacity-0': !isOpen }" @click="closeModal" style="transition: opacity 0.3s ease;">
 
     <!-- Modal Content -->
     <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl mx-4 my-8 overflow-hidden transform aspect-[4/3]"
@@ -165,7 +164,7 @@ const updateBooking = (field, content) => {
               <div class="flex items-center space-x-2">
                 <div class="flex-grow">
                   <p v-if="!editState.start_date" class="font-medium text-base">{{ formatDate(booking.getStart_date())
-                  }}</p>
+                    }}</p>
                   <MiniForm v-else :field="'start_date'" :input-type="'datetime-local'"
                     :input-content="booking.getStart_date()" @send="updateBooking" />
                 </div>
@@ -229,11 +228,11 @@ const updateBooking = (field, content) => {
         </button>
 
         <template v-if="booking.getAccepted() === null && booking.getVerified_at()">
-          <button @click="emit('save', { id: booking.getId(), action: 'deny' })"
+          <button @click="emit('deny')"
             class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none">
-            Elutasítás ezmi?
+            Elutasítás
           </button>
-          <button @click="emit('save', { id: booking.getId(), action: 'accept' })"
+          <button @click="emit('accept')"
             class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none">
             Elfogadás
           </button>
@@ -244,9 +243,16 @@ const updateBooking = (field, content) => {
 </template>
 
 <style scoped>
-/* Explicit CSS blur filter for browsers that don't fully support backdrop-filter */
-.fixed {
+.backdrop-blur-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not ((backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px))) {
+  .backdrop-blur-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
 }
 </style>

@@ -65,17 +65,29 @@ const disabledDates = ref([]);
 
 const bookingStatuses = ref(new Map())
 
-const accept = (bookingId) => {
+const accept = (bookingId, isModal = false) => { // confirm?
   router.patch(route("admin.booking.accept", { booking: bookingId }), {}, {
     preserveScroll: true,
+    onSuccess: () => {
+      if (isModal) bookingModalView.refresh()
+    },
+    onError: () => {
+      alert('Hiba történt a művelet során.')
+    }
   });
 }
 
-const deny = (bookingId) => {
+const deny = (bookingId, isModal = false) => {
   if (confirm('Biztosan elutasítja?')) {
     router.patch(route("admin.booking.deny", { booking: bookingId }), {}, {
       preserveScroll: true,
-    });
+      onSuccess: () => {
+        if (isModal) bookingModalView.refresh()
+      },
+      onError: () => {
+        alert('Hiba történt a művelet során.')
+      }
+    })
   }
 }
 
@@ -160,18 +172,18 @@ const bookingModalView = reactive({
     this.show = false
     this.booking = null
   },
-  async refresh() {
+  refresh() {
     if (this.booking) {
-      await nextTick()
       this.booking = bookings.value.find((booking) => booking.getId() == this.booking.getId())
     }
-  }
+  },
 })
 
 </script>
 
 <template>
   <BookingModal v-if="bookingModalView.show" :booking="bookingModalView.booking" @exit="bookingModalView.exit()"
+    @deny="deny(bookingModalView.booking.getId(), true)" @accept="accept(bookingModalView.booking.getId(), true)"
     @refresh="bookingModalView.refresh()" />
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">Admin</h1>
