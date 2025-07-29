@@ -13,6 +13,9 @@ const props = defineProps({
   }
 })
 
+// Egyszerűbb hozzáférés a sablonban
+const booking = props.booking;
+
 const emit = defineEmits(['save', 'exit'])
 
 const isOpen = ref(true);
@@ -39,28 +42,33 @@ const editState = reactive({
   start_date: false,
   end_date: false,
   description: false,
-  toggle(target) { // buggos :(
-    this.description = this.start_date = this.description = false
-    this[target] = true
+  toggle(field) {
+    // Javítva a bugos togglet
+    this.start_date = false;
+    this.end_date = false;
+    this.description = false;
+    this[field] = true;
   }
 })
 
-const updateBooking = (target, content) => {
-  router.put(route('admin.booking.update', { // rename attrs
-    booking: props.booking.getId(),
-    field: target,
+const updateBooking = (field, content) => {
+  router.put(route('admin.booking.update', {
+    booking: booking.getId(),
+    field: field,
     value: content
   }))
+
+  editState.toggle(null)
 }
 </script>
 
 <template>
-  <!-- Modal Backdrop with blur effect -->
-  <div
-    class="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40 flex items-center justify-center overflow-y-auto"
-    :class="{ 'opacity-100': isOpen, 'opacity-0': !isOpen }" @click="closeModal" style="transition: opacity 0.3s ease;">
+  <!-- Modal Backdrop with explicit blur filter -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center overflow-y-auto"
+    :class="{ 'opacity-100': isOpen, 'opacity-0': !isOpen }" @click="closeModal" 
+    style="transition: opacity 0.3s ease; backdrop-filter: blur(8px);">
 
-    <!-- Modal Content - 4:3 ratio and larger size -->
+    <!-- Modal Content -->
     <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl mx-4 my-8 overflow-hidden transform aspect-[4/3]"
       :class="{ 'translate-y-0 opacity-100': isOpen, 'translate-y-4 opacity-0': !isOpen }"
       style="transition: all 0.3s ease;" @click.stop>
@@ -75,7 +83,7 @@ const updateBooking = (target, content) => {
         </button>
       </div>
 
-      <!-- Modal Body - scrollable to maintain 4:3 ratio -->
+      <!-- Modal Body -->
       <div class="px-6 py-4 overflow-y-auto" style="height: calc(100% - 130px);">
         <!-- Basic Info Section -->
         <div class="mb-5">
@@ -84,24 +92,24 @@ const updateBooking = (target, content) => {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p class="text-sm text-gray-500">Foglalás létrehozva</p>
-              <p class="font-medium text-base">{{ formatDate(props.booking.getCreated_at()) }}</p>
+              <p class="font-medium text-base">{{ formatDate(booking.getCreated_at()) }}</p>
             </div>
 
             <div>
               <p class="text-sm text-gray-500">Foglalás típusa</p>
-              <p class="font-medium text-base">{{ props.booking.getBookingTypeString() }}</p>
+              <p class="font-medium text-base">{{ booking.getBookingTypeString() }}</p>
             </div>
 
             <div>
               <p class="text-sm text-gray-500">Foglalás állapota</p>
               <div class="flex items-center">
                 <span class="inline-block h-3 w-3 rounded-full mr-2" :class="{
-                  'bg-green-500': props.booking.getAccepted() === true,
-                  'bg-red-500': props.booking.getAccepted() === false,
-                  'bg-yellow-500': props.booking.getAccepted() === null
+                  'bg-green-500': booking.getAccepted() === true,
+                  'bg-red-500': booking.getAccepted() === false,
+                  'bg-yellow-500': booking.getAccepted() === null
                 }"></span>
                 <p class="font-medium text-base">
-                  {{ props.booking.getAcceptedString() }}
+                  {{ booking.getAcceptedString() }}
                 </p>
               </div>
             </div>
@@ -110,10 +118,10 @@ const updateBooking = (target, content) => {
               <p class="text-sm text-gray-500">Email megerősítése</p>
               <div class="flex items-center">
                 <span class="inline-block h-3 w-3 rounded-full mr-2" :class="{
-                  'bg-green-500': props.booking.getVerified_at(),
-                  'bg-red-500': !props.booking.getVerified_at()
+                  'bg-green-500': booking.getVerified_at(),
+                  'bg-red-500': !booking.getVerified_at()
                 }"></span>
-                <p class="font-medium text-base">{{ props.booking.getVerificationText() }}</p>
+                <p class="font-medium text-base">{{ booking.getVerificationText() }}</p>
               </div>
             </div>
           </div>
@@ -126,17 +134,17 @@ const updateBooking = (target, content) => {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p class="text-sm text-gray-500">Név</p>
-              <p class="font-medium text-base">{{ props.booking.getName() }}</p>
+              <p class="font-medium text-base">{{ booking.getName() }}</p>
             </div>
 
             <div>
               <p class="text-sm text-gray-500">Telefonszám</p>
-              <p class="font-medium text-base">{{ props.booking.getPhone() }}</p>
+              <p class="font-medium text-base">{{ booking.getPhone() }}</p>
             </div>
 
             <div class="md:col-span-2">
               <p class="text-sm text-gray-500">Email cím</p>
-              <p class="font-medium text-base">{{ props.booking.getEmail() }}</p>
+              <p class="font-medium text-base">{{ booking.getEmail() }}</p>
             </div>
           </div>
         </div>
@@ -148,32 +156,36 @@ const updateBooking = (target, content) => {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p class="text-sm text-gray-500">Kezdő dátum</p>
-              <div>
-                <p v-if="!editState.start_date" class="font-medium text-base">{{
-                  formatDate(props.booking.getStart_date()) }}</p>
-                <MiniForm v-else :target="'start_date'" :input-type="'datetime-local'"
-                  :input-content="booking.getStart_date()" @send="updateBooking" />
+              <!-- Szerkesztő ikon és tartalom egy sorban -->
+              <div class="flex items-center space-x-2">
+                <div class="flex-grow">
+                  <p v-if="!editState.start_date" class="font-medium text-base">{{ formatDate(booking.getStart_date()) }}</p>
+                  <MiniForm v-else :field="'start_date'" :input-type="'datetime-local'" :input-content="booking.getStart_date()"
+                    @send="updateBooking" />
+                </div>
+                <svg @click="editState.toggle('start_date')" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 cursor-pointer text-blue-600 hover:text-blue-800">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                </svg>
               </div>
-              <svg @click="editState.toggle('start_date')" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-              </svg>
             </div>
 
             <div>
               <p class="text-sm text-gray-500">Befejező dátum</p>
-              <div>
-                <p v-if="!editState.end_date" class="font-medium text-base">{{ formatDate(props.booking.getEnd_date())
-                  }}</p>
-                <MiniForm v-else :target="'end_date'" :input-type="'datetime-local'"
-                  :input-content="booking.getEnd_date()" @send="updateBooking" />
+              <!-- Szerkesztő ikon és tartalom egy sorban -->
+              <div class="flex items-center space-x-2">
+                <div class="flex-grow">
+                  <p v-if="!editState.end_date" class="font-medium text-base">{{ formatDate(booking.getEnd_date()) }}</p>
+                  <MiniForm v-else :field="'end_date'" :input-type="'datetime-local'" :input-content="booking.getEnd_date()"
+                    @send="updateBooking" />
+                </div>
+                <svg @click="editState.toggle('end_date')" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 cursor-pointer text-blue-600 hover:text-blue-800">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                </svg>
               </div>
-              <svg @click="editState.toggle('end_date')" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-              </svg>
             </div>
           </div>
         </div>
@@ -181,18 +193,21 @@ const updateBooking = (target, content) => {
         <!-- Description Section -->
         <div class="mb-5">
           <h3 class="text-lg font-semibold text-gray-700 mb-3 pb-2 border-b">Megjegyzés</h3>
-          <div>
-            <p v-if="!editState.description" class="whitespace-pre-line">
-              {{ props.booking.getDescription() || 'Nincs megjegyzés' }}
-            </p>
-            <MiniForm v-else :target="'description'" :input-type="'textarea'" :input-content="booking.getDescription()"
-              @send="updateBooking" />
+          <!-- Szerkesztő ikon és tartalom egy sorban -->
+          <div class="flex items-start space-x-2">
+            <div class="flex-grow">
+              <p v-if="!editState.description" class="whitespace-pre-line">
+                {{ booking.getDescription() || 'Nincs megjegyzés' }}
+              </p>
+              <MiniForm v-else :field="'description'" :input-type="'textarea'" :input-content="booking.getDescription()"
+                @send="updateBooking" />
+            </div>
+            <svg @click="editState.toggle('description')" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 cursor-pointer text-blue-600 hover:text-blue-800 mt-1">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+            </svg>
           </div>
-          <svg @click="editState.toggle('description')" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-          </svg>
         </div>
       </div>
 
@@ -203,12 +218,12 @@ const updateBooking = (target, content) => {
           Bezárás
         </button>
 
-        <template v-if="props.booking.getAccepted() === null && props.booking.getVerified_at()">
-          <button @click="emit('save', { id: props.booking.getId(), action: 'deny' })"
+        <template v-if="booking.getAccepted() === null && booking.getVerified_at()">
+          <button @click="emit('save', { id: booking.getId(), action: 'deny' })"
             class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none">
-            Elutasítás
+            Elutasítás ezmi?
           </button>
-          <button @click="emit('save', { id: props.booking.getId(), action: 'accept' })"
+          <button @click="emit('save', { id: booking.getId(), action: 'accept' })"
             class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none">
             Elfogadás
           </button>
@@ -219,10 +234,9 @@ const updateBooking = (target, content) => {
 </template>
 
 <style scoped>
-/* Ensure the backdrop-filter works in browsers that support it */
-@supports (backdrop-filter: blur(4px)) {
-  .backdrop-blur-sm {
-    backdrop-filter: blur(4px);
-  }
+/* Explicit CSS blur filter for browsers that don't fully support backdrop-filter */
+.fixed {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 </style>

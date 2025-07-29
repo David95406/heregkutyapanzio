@@ -1,11 +1,13 @@
 <script setup>
 import { reactive } from 'vue'
 
-
 const props = defineProps({
     inputType: String,
-    inputContent: String || Object,
-    target: {
+    inputContent: {
+        type: [String, Object, Date],
+        default: ''
+    },
+    field: {
         type: String,
         default: ''
     }
