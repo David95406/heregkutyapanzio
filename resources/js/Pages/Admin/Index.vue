@@ -2,7 +2,7 @@
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 import AdminLayout from '../../Layout/AdminLayout.vue';
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
 import Booking from '../../classes/Booking';
 import BookingModal from '../../Components/BookingModal.vue';
 import { formatDate } from '../../utils';
@@ -159,13 +159,20 @@ const bookingModalView = reactive({
   exit() {
     this.show = false
     this.booking = null
+  },
+  async refresh() {
+    if (this.booking) {
+      await nextTick()
+      this.booking = bookings.value.find((booking) => booking.getId() == this.booking.getId())
+    }
   }
 })
 
 </script>
 
 <template>
-  <BookingModal v-if="bookingModalView.show" :booking="bookingModalView.booking" @exit="bookingModalView.exit()" />
+  <BookingModal v-if="bookingModalView.show" :booking="bookingModalView.booking" @exit="bookingModalView.exit()"
+    @refresh="bookingModalView.refresh()" />
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">Admin</h1>
     <h2 class="text-xl font-semibold mb-6">Foglalások</h2>

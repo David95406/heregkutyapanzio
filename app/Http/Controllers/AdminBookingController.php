@@ -74,7 +74,7 @@ class AdminBookingController extends Controller
                 }
                 break;
         }
-        
+
         $booking->update([$field->value => $validatedRequest['value']]);
         return redirect()->back()->with('success', 'A foglalás sikeresen frissítve!');
     }

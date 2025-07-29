@@ -22,7 +22,7 @@ const form = reactive({
 })
 
 const saveForm = () => {
-    emit('send', props.target, form.content)
+    emit('send', props.field, form.content)
 }
 </script>
 

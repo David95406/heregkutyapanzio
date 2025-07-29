@@ -56,6 +56,10 @@ export default class Booking {
         }
     }
 
+    toString() {
+        return `Booking: ${this.getName()}, ${this.getEmail()}, ${this.getPhone()}, ${this.getBookingTypeString()}, ${this.getAcceptedString()}, ${this.getVerificationText()}`
+    }
+
     isDayCare() {
         return getDayFromDate(this.#start_date) == getDayFromDate(this.#end_date)
     }

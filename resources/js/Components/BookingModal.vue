@@ -1,7 +1,7 @@
 <script setup>
 import Booking from '../classes/Booking';
 import { formatDate } from '../utils';
-import { ref, onMounted, onBeforeUnmount, reactive } from 'vue';
+import { ref, onMounted, onBeforeUnmount, reactive, compile, computed } from 'vue';
 import MiniForm from './MiniForm.vue';
 import { route } from 'ziggy-js';
 import { router } from '@inertiajs/vue3';
@@ -14,9 +14,9 @@ const props = defineProps({
 })
 
 // Egyszerűbb hozzáférés a sablonban
-const booking = props.booking;
+const booking = computed(() => props.booking)
 
-const emit = defineEmits(['save', 'exit'])
+const emit = defineEmits(['exit', 'refresh'])
 
 const isOpen = ref(true);
 
@@ -43,7 +43,6 @@ const editState = reactive({
   end_date: false,
   description: false,
   toggle(field) {
-    // Javítva a bugos togglet
     this.start_date = false;
     this.end_date = false;
     this.description = false;
@@ -53,19 +52,25 @@ const editState = reactive({
 
 const updateBooking = (field, content) => {
   router.put(route('admin.booking.update', {
-    booking: booking.getId(),
+    booking: booking.value.getId(),
     field: field,
     value: content
-  }))
-
-  editState.toggle(null)
+  }), {}, {
+    onSuccess: () => {
+      emit('refresh');
+      editState.toggle(null);
+    },
+    onError: () => {
+      alert("Hiba történt a foglalás frissítése közben.")
+    }
+  })
 }
 </script>
 
 <template>
   <!-- Modal Backdrop with explicit blur filter -->
   <div class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center overflow-y-auto"
-    :class="{ 'opacity-100': isOpen, 'opacity-0': !isOpen }" @click="closeModal" 
+    :class="{ 'opacity-100': isOpen, 'opacity-0': !isOpen }" @click="closeModal"
     style="transition: opacity 0.3s ease; backdrop-filter: blur(8px);">
 
     <!-- Modal Content -->
@@ -159,12 +164,14 @@ const updateBooking = (field, content) => {
               <!-- Szerkesztő ikon és tartalom egy sorban -->
               <div class="flex items-center space-x-2">
                 <div class="flex-grow">
-                  <p v-if="!editState.start_date" class="font-medium text-base">{{ formatDate(booking.getStart_date()) }}</p>
-                  <MiniForm v-else :field="'start_date'" :input-type="'datetime-local'" :input-content="booking.getStart_date()"
-                    @send="updateBooking" />
+                  <p v-if="!editState.start_date" class="font-medium text-base">{{ formatDate(booking.getStart_date())
+                  }}</p>
+                  <MiniForm v-else :field="'start_date'" :input-type="'datetime-local'"
+                    :input-content="booking.getStart_date()" @send="updateBooking" />
                 </div>
                 <svg @click="editState.toggle('start_date')" xmlns="http://www.w3.org/2000/svg" fill="none"
-                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 cursor-pointer text-blue-600 hover:text-blue-800">
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                  class="size-5 cursor-pointer text-blue-600 hover:text-blue-800">
                   <path stroke-linecap="round" stroke-linejoin="round"
                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                 </svg>
@@ -176,12 +183,14 @@ const updateBooking = (field, content) => {
               <!-- Szerkesztő ikon és tartalom egy sorban -->
               <div class="flex items-center space-x-2">
                 <div class="flex-grow">
-                  <p v-if="!editState.end_date" class="font-medium text-base">{{ formatDate(booking.getEnd_date()) }}</p>
-                  <MiniForm v-else :field="'end_date'" :input-type="'datetime-local'" :input-content="booking.getEnd_date()"
-                    @send="updateBooking" />
+                  <p v-if="!editState.end_date" class="font-medium text-base">{{ formatDate(booking.getEnd_date()) }}
+                  </p>
+                  <MiniForm v-else :field="'end_date'" :input-type="'datetime-local'"
+                    :input-content="booking.getEnd_date()" @send="updateBooking" />
                 </div>
                 <svg @click="editState.toggle('end_date')" xmlns="http://www.w3.org/2000/svg" fill="none"
-                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 cursor-pointer text-blue-600 hover:text-blue-800">
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                  class="size-5 cursor-pointer text-blue-600 hover:text-blue-800">
                   <path stroke-linecap="round" stroke-linejoin="round"
                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                 </svg>
@@ -203,7 +212,8 @@ const updateBooking = (field, content) => {
                 @send="updateBooking" />
             </div>
             <svg @click="editState.toggle('description')" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 cursor-pointer text-blue-600 hover:text-blue-800 mt-1">
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+              class="size-5 cursor-pointer text-blue-600 hover:text-blue-800 mt-1">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
             </svg>
