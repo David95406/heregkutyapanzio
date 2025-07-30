@@ -23,8 +23,18 @@ class AdminPostController extends Controller
         return;
     }
 
-    public function update(Request $request) {
-        return;
+    public function update(Request $request, Post $post) {
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'imageUrl' => 'required|string|max:16383', // a 16383 save place
+            'title' => 'required|string|max:255',
+            'text' => 'required|string|max:16383',
+        ]);
+        
+        $post->update($validated);
+        
+        return redirect()->route('posts.index')
+            ->with('message', 'Post updated successfully');
     }
 
     public function destroy(Request $request) {

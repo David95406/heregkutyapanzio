@@ -18,6 +18,8 @@ export default class Post {
         this.getText = this.getText.bind(this)
 
         this.getFormattedDate = this.getFormattedDate.bind(this)
+        this.toString = this.toString.bind(this)
+        this.isEqual = this.isEqual.bind(this)
 
         if (post) {
             this.setId(post.id)
@@ -26,6 +28,38 @@ export default class Post {
             this.setTitle(post.title)
             this.setText(post.text)
         }
+    }
+
+    isEqual(otherPost) {
+        if (!(otherPost instanceof Post)) {
+            return false
+        }
+
+        return this.getId() === otherPost.getId() &&
+               this.getDate().getTime() === otherPost.getDate().getTime() &&
+               this.getImageurl() === otherPost.getImageurl() &&
+               this.getTitle() === otherPost.getTitle() &&
+               this.getText() === otherPost.getText()
+    }
+
+    toObject() {
+        return {
+            id: this.getId(),
+            date: this.getDate(),
+            imageUrl: this.getImageurl(),
+            title: this.getTitle(),
+            text: this.getText()
+        }
+    }
+
+    toString() {
+        return `Post {
+            id: ${this.getId()},
+            date: ${this.getFormattedDate()},
+            imageUrl: ${this.getImageurl()},
+            title: ${this.getTitle()},
+            text: ${this.getText()}
+        }`;
     }
 
     setId(id) {
