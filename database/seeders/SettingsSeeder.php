@@ -19,5 +19,12 @@ class SettingsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('settings')->insert([
+            'key' => 'numberOfPosts',
+            'value' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

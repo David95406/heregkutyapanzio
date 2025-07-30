@@ -10,6 +10,8 @@ import { getDayFromDate, getBookingType } from '../../utils';
 import AnimatedContent from "../../Components/AnimatedContent.vue"
 import SplitText from '../../Components/SplitText.vue';
 
+// csabika, ha panzio ne legyen ora!
+
 const props = defineProps({
     blockedDates: Array
 })
@@ -81,19 +83,21 @@ const submitForm = () => {
 }
 
 </script>
+
 <template>
     <section>
         <div class="flex flex-col tablet:flex-row w-full manrope-normal">
             <section class="flex flex-col w-full bg-light-blue @h-1/2">
                 <p class="p-4 text-textBlue">Foglalás > <span class="font-bold">Kezdeti lépések</span></p>
                 <div class="flex flex-col flex-grow">
-                    <SplitText text="Foglalj időpontot egyszerűen" class-name="p-3 manrope-bold text-textBlue text-4xl tracking-widest"
-                        :delay="0" :duration="0.8" ease="power3.out" split-type="chars" :from="{ opacity: 0, y: 40 }"
-                        :to="{ opacity: 1, y: 0 }" :threshold="0.1" root-margin="-100px" text-align="start" />
+                    <SplitText text="Foglalj időpontot egyszerűen"
+                        class-name="p-3 manrope-bold text-textBlue text-4xl tracking-widest" :delay="0" :duration="0.8"
+                        ease="power3.out" split-type="chars" :from="{ opacity: 0, y: 40 }" :to="{ opacity: 1, y: 0 }"
+                        :threshold="0.1" root-margin="-100px" text-align="start" />
                     <SplitText text="Válaszd ki a számodra megfelelő napot, majd add meg adataidat, és
                         küldd
-                        el nekünk foglalásodat pár kattintással!" class-name="px-3.5 text-textBlue"
-                        :delay="0" :duration="0.8" ease="power3.out" split-type="chars" :from="{ opacity: 0, y: 40 }"
+                        el nekünk foglalásodat pár kattintással!" class-name="px-3.5 text-textBlue" :delay="0"
+                        :duration="0.8" ease="power3.out" split-type="chars" :from="{ opacity: 0, y: 40 }"
                         :to="{ opacity: 1, y: 0 }" :threshold="0.1" root-margin="-100px" text-align="start" />
                 </div>
             </section>
@@ -134,7 +138,9 @@ const submitForm = () => {
                             <textarea id="message" v-model="bookingForm.description" rows="3" required
                                 class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                         </div>
-
+                        <p v-if="foglalasTipusa === 'Panzió'" class="text-sm text-gray-600 italic mt-2">
+                            Panzió esetén az órák alapértelmezett értéken maradhatnak, nem szükséges módosítani.
+                        </p>
                         <button type="submit"
                             class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-300">
                             Foglalás küldése
