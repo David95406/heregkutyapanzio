@@ -8,6 +8,8 @@ const props = defineProps({
 })
 
 const posts = computed(() => props.posts.map((post) => new Post(post)))
+
+// Main component??
 </script>
 
 <template>

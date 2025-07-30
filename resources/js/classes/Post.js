@@ -17,6 +17,8 @@ export default class Post {
         this.setText = this.setText.bind(this)
         this.getText = this.getText.bind(this)
 
+        this.getFormattedDate = this.getFormattedDate.bind(this)
+
         if (post) {
             this.setId(post.id)
             this.setDate(post.date)
@@ -40,6 +42,10 @@ export default class Post {
 
     getDate() {
         return this.#date
+    }
+
+    getFormattedDate() {
+        return this.#date.toISOString().split('T')[0]
     }
 
     setImageurl(imageUrl) {

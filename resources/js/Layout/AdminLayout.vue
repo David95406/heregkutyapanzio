@@ -17,6 +17,10 @@ const logout = () => {
                 Kezdőlap
                 </Link>
 
+                <Link href="/admin/posts" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">
+                Posztok
+                </Link>
+
                 <Link href="/admin/settings" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">
                 Beállítások
                 </Link>
