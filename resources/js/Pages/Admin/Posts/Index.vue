@@ -19,6 +19,12 @@ const posts = computed(() => props.posts.map((post) => new Post(post)))
 const updatePost = (post) => {
     router.put(route('posts.update', { post: post.getId() }), post.toObject())
 }
+
+const deletePost = (post) => {
+    if (post instanceof Post) {
+        router.delete(route('posts.destroy', { post: post.getId() }))
+    }
+}
 </script>
 
 <template>
@@ -32,7 +38,8 @@ const updatePost = (post) => {
             </tr>
         </thead>
         <tbody>
-            <PostLine v-for="post in posts" :key="post.getId()" :post="post" @update="updatePost" />
+            <PostLine v-for="post in posts" :key="post.getId()" :post="post" @update="updatePost"
+                @delete="deletePost" />
         </tbody>
     </table>
 </template>

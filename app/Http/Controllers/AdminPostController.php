@@ -37,7 +37,7 @@ class AdminPostController extends Controller
             ->with('message', 'Post updated successfully');
     }
 
-    public function destroy(Request $request) {
-        return;
+    public function destroy(Request $request, Post $post) {
+        $post->delete();
     }
 }

@@ -7,7 +7,7 @@ const props = defineProps({
     post: Post
 })
 
-const emit = defineEmits(['update'])
+const emit = defineEmits(['update', 'delete'])
 
 const editState = reactive({
     show: false
@@ -33,9 +33,11 @@ const handleSave = (updatedData) => {
     })
 
     emit('update', updatedPost)
-    
+
     toggleModal()
 }
+
+const handleDelete = () => { emit('delete', props.post) }
 
 const handleCancel = () => {
     toggleModal()
@@ -51,7 +53,7 @@ const handleCancel = () => {
                 <button @click="toggleModal" class="edit-btn">
                     Edit
                 </button>
-                <button class="delete-btn" @click="$emit('delete', post.getId())">
+                <button class="delete-btn" @click="handleDelete">
                     Delete
                 </button>
             </div>
