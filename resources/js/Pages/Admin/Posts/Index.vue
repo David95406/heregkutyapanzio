@@ -1,8 +1,9 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import AdminLayout from '../../../Layout/AdminLayout.vue';
 import Post from '../../../classes/Post';
 import PostLine from './Components/PostLine.vue';
+import ManagePostCard from './Components/ManagePostCard.vue';
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 
@@ -14,27 +15,60 @@ const props = defineProps({
     posts: Array
 })
 
-const posts = computed(() => props.posts.map((post) => new Post(post)))
+const posts = computed(() => props.posts.map((post) => new Post(post)).sort((p1, p2) => p2.getDate() - p1.getDate()))
+
+const showCreatePostModal = ref({
+    show: false
+})
+
+const createPost = (postData) => {
+    router.post(route('posts.store'), {
+        imageUrl: postData.imageUrl,
+        title: postData.title,
+        text: postData.text
+    })
+    toggleCreateModal()
+}
 
 const updatePost = (post) => {
     router.put(route('posts.update', { post: post.getId() }), post.toObject())
 }
 
 const deletePost = (post) => {
-    if (post instanceof Post) {
+    if (post instanceof Post && confirm("Biztos benne hogy torli ezt a posztot?")) {
         router.delete(route('posts.destroy', { post: post.getId() }))
     }
+}
+
+const toggleCreateModal = () => {
+    showCreatePostModal.value = !showCreatePostModal.value
+
+    if (showCreatePostModal.value) {
+        document.body.style.overflow = 'hidden'
+    } else {
+        document.body.style.overflow = ''
+    }
+}
+
+const handleCancelCreate = () => {
+    toggleCreateModal()
 }
 </script>
 
 <template>
-    <h1>Posts Management</h1>
+    <div class="posts-header">
+        <h1>Bejegyzések kezelése</h1>
+        <button @click="toggleCreateModal" class="create-btn">
+            Új bejegyzés létrehozása
+        </button>
+    </div>
+
     <table class="posts-table">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Actions</th>
+                <th>Cím</th>
+                <th>Dátum</th>
+                <th>Műveletek</th>
             </tr>
         </thead>
         <tbody>
@@ -42,9 +76,31 @@ const deletePost = (post) => {
                 @delete="deletePost" />
         </tbody>
     </table>
+
+    <!-- Create Post Modal -->
+    <ManagePostCard v-if="showCreatePostModal"
+        :post="new Post({ id: 0, date: new Date(), imageUrl: '', title: '', text: '' })" @save="createPost"
+        @cancel="handleCancelCreate" :isNewPost="true" />
 </template>
 
 <style scoped>
+.posts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.create-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 .posts-table {
     width: 100%;
     border-collapse: collapse;

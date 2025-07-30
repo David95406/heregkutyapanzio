@@ -20,7 +20,16 @@ class AdminPostController extends Controller
     }
 
     public function store(Request $request) {
-        return;
+        $validated = $request->validate([
+            'imageUrl' => 'required|string|max:16383',
+            'title' => 'required|string|max:255',
+            'text' => 'required|string|max:16383',
+        ]);
+        
+        Post::create($validated);
+        
+        return redirect()->route('posts.index')
+            ->with('message', 'Post created successfully');
     }
 
     public function update(Request $request, Post $post) {
@@ -39,5 +48,8 @@ class AdminPostController extends Controller
 
     public function destroy(Request $request, Post $post) {
         $post->delete();
+        
+        return redirect()->route('posts.index')
+            ->with('message', 'Post deleted successfully');
     }
 }

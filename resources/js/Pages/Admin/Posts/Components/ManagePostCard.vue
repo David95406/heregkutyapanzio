@@ -5,16 +5,20 @@ import FacebookCard from '../../../Index/Components/FacebookCard.vue';
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
-  post: Post
+  post: Post,
+  isNewPost: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const emit = defineEmits(['save', 'cancel'])
 
 const formData = useForm({
   id: props.post.getId(),
-  imageUrl: props.post.getImageurl(),
-  title: props.post.getTitle(),
-  text: props.post.getText()
+  imageUrl: props.post.getImageurl() || 'https://placehold.co/500x200',
+  title: props.post.getTitle() || '',
+  text: props.post.getText() || ''
 })
 
 const updatedPost = computed(() => new Post({
@@ -26,12 +30,15 @@ const updatedPost = computed(() => new Post({
 }))
 
 const saveChanges = () => {
-  if (!props.post.isEqual(updatedPost.value)) {
+  // ha uj save ha modosult update
+  if (props.isNewPost || !props.post.isEqual(updatedPost.value)) {
     emit('save', {
       imageUrl: formData.imageUrl,
       title: formData.title,
       text: formData.text
     })
+  } else {
+    closeModal()
   }
 }
 
@@ -44,7 +51,7 @@ const closeModal = () => {
   <div class="modal-overlay" @click.self="closeModal">
     <div class="modal-container">
       <div class="modal-header">
-        <h2>Bejegyzés szerkesztése</h2>
+        <h2>{{ isNewPost ? 'Új bejegyzés létrehozása' : 'Bejegyzés szerkesztése' }}</h2>
         <button @click="closeModal" class="close-btn">&times;</button>
       </div>
 
@@ -56,25 +63,27 @@ const closeModal = () => {
           </div>
 
           <div class="edit-section">
-            <h3>Részletek szerkesztése</h3>
+            <h3>{{ isNewPost ? 'Új bejegyzés adatai' : 'Részletek szerkesztése' }}</h3>
             <form @submit.prevent="saveChanges">
               <div class="form-group">
                 <label for="imageUrl">Kép URL</label>
-                <input type="text" id="imageUrl" v-model="formData.imageUrl" class="form-control" />
+                <input type="text" id="imageUrl" v-model="formData.imageUrl" class="form-control" required />
               </div>
 
               <div class="form-group">
                 <label for="title">Cím</label>
-                <input type="text" id="title" v-model="formData.title" class="form-control" />
+                <input type="text" id="title" v-model="formData.title" class="form-control" required />
               </div>
 
               <div class="form-group">
                 <label for="text">Tartalom</label>
-                <textarea id="text" v-model="formData.text" class="form-control" rows="5"></textarea>
+                <textarea id="text" v-model="formData.text" class="form-control" rows="5" required></textarea>
               </div>
 
               <div class="button-group">
-                <button type="submit" class="save-btn">Változások mentése</button>
+                <button type="submit" class="save-btn">
+                  {{ isNewPost ? 'Létrehozás' : 'Változások mentése' }}
+                </button>
                 <button type="button" class="cancel-btn" @click="closeModal">Mégse</button>
               </div>
             </form>
