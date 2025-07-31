@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminBookingController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\BlockedDateController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\IndexController;
@@ -43,4 +44,6 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::patch('booking/{booking}/deny', [AdminBookingController::class, 'deny'])->name('admin.booking.deny');
     // blocked date
     Route::resource('blocked-dates', BlockedDateController::class)->only(['store', 'destroy', 'index']);
+    // posts
+    Route::resource('posts', AdminPostController::class)->only(['index', 'store', 'update', 'destroy']);
 });

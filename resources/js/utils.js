@@ -1,5 +1,10 @@
+function fixVDatePicker(date) {
+    date.setDate(date.getDate() + 1);
+    return date;
+}
+
 export function toMySqlDateTime(date) {
-    return new Date(date).toISOString().slice(0, 19).replace('T', ' ');
+    return fixVDatePicker(new Date(date)).toISOString().slice(0, 19).replace('T', ' ');
 }
 
 export function getDayFromDate(date) {

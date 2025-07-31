@@ -3,7 +3,9 @@ import FacebookCard from './FacebookCard.vue';
 import SplitText from "../../../Components/SplitText.vue";
 import AnimatedContent from '../../../Components/AnimatedContent.vue';
 
-
+const props = defineProps({
+    posts: Array
+})
 </script>
 <template>
     <div class="flex flex-col tablet:flex-row w-full manrope-normal">
@@ -26,10 +28,10 @@ import AnimatedContent from '../../../Components/AnimatedContent.vue';
     </div>
     <div
         class="grid grid-cols-1 tablet:grid-cols-3 gap-4 p-5 w-full h-full bg-light-blue justify-items-center">
-        <div v-for="kartya in 6" :key="kartya">
+        <div v-for="post in posts" :key="post.getId()">
             <AnimatedContent :distance="100" direction="vertical" :reverse="false" :duration="0.8" ease="power3.out"
             :initial-opacity="0" :animate-opacity="true" :scale="1" :threshold="0.1" :delay="0">
-            <FacebookCard class="hover:animate-zoom" />
+            <FacebookCard :post="post" class="hover:animate-zoom" />
             </AnimatedContent>
         </div>
     </div>
