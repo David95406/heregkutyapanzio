@@ -118,6 +118,6 @@ const handleCancelCreate = () => {
 
     <!-- Create Post Modal -->
     <ManagePostCard v-if="showCreatePostModal"
-        :post="new Post({ id: 0, date: new Date(), imageUrl: '', title: '', text: '' })" @save="createPost"
+        :post="new Post({ id: -1, date: new Date(), imageUrl: '', title: '', text: '' })" @save="createPost"
         @cancel="handleCancelCreate" :isNewPost="true" />
 </template>
