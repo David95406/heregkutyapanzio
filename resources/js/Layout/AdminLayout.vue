@@ -1,7 +1,8 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
+import { watch } from 'vue';
 
 const logout = () => {
     router.post(route("admin.logout"))
@@ -18,7 +19,7 @@ const logout = () => {
                 </Link>
 
                 <Link href="/admin/posts" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">
-                Posztok
+                Bejegyzések
                 </Link>
 
                 <Link href="/admin/settings" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">

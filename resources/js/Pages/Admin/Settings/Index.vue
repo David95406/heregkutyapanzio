@@ -3,8 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import AdminLayout from '../../../Layout/AdminLayout.vue';
 import { reactive, computed } from 'vue';
 import { route } from 'ziggy-js';
-import { createToast } from 'mosha-vue-toastify';
-import 'mosha-vue-toastify/dist/style.css'
+import { makeToast } from '../../../toast';
 
 defineOptions({
   layout: AdminLayout
@@ -39,15 +38,6 @@ const viewState = reactive({
     return !!updateGraphApiKeyForm.graphApiKey;
   })
 })
-
-const makeToast = (text, type = 'success') => {
-  createToast(text, {
-    type: type,
-    transition: 'slide',
-    position: 'top-right',
-    timeout: 10000,
-  })
-}
 
 const changePassword = () => {
   changePasswordForm.put(route("settings.change-password"), {

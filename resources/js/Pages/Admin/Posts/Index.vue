@@ -6,6 +6,7 @@ import PostLine from './Components/PostLine.vue';
 import ManagePostCard from './Components/ManagePostCard.vue';
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
+import { makeToast } from '../../../toast';
 
 defineOptions({
     layout: AdminLayout
@@ -24,17 +25,41 @@ const createPost = (postData) => {
         imageUrl: postData.imageUrl,
         title: postData.title,
         text: postData.text
+    }, {
+        onSuccess: () => {
+            makeToast('Sikeresen létrehozta a bejegyzést!', 'success');
+        },
+        onError: () => {
+            makeToast('Hiba történt a bejegyzés létrehozása során: ', 'danger');
+        }
     })
+
     toggleCreateModal()
 }
 
 const updatePost = (post) => {
-    router.put(route('posts.update', { post: post.getId() }), post.toObject())
+    if (post instanceof Post) {
+        router.put(route('posts.update', { post: post.getId() }), post.toObject(), {
+            onSuccess: () => {
+                makeToast('Sikeresen frissítette a bejegyzést!', 'success');
+            },
+            onError: () => {
+                makeToast('Hiba történt a bejegyzés frissítése során: ', 'danger');
+            }
+        })
+    }
 }
 
 const deletePost = (post) => {
-    if (post instanceof Post && confirm("Biztos benne hogy torli ezt a posztot?")) {
-        router.delete(route('posts.destroy', { post: post.getId() }))
+    if (post instanceof Post && confirm("Biztos benne hogy törli ezt a posztot?")) {
+        router.delete(route('posts.destroy', { post: post.getId() }), {
+            onSuccess: () => {
+                makeToast('Sikeresen törölte a bejegyzést!', 'success');
+            },
+            onError: () => {
+                makeToast('Hiba történt a bejegyzés törlése során: ', 'danger');
+            }
+        });
     }
 }
 
@@ -54,14 +79,15 @@ const handleCancelCreate = () => {
 </script>
 
 <template>
-    <!-- Removed container class to allow full width -->
     <div class="px-4 py-8 w-full max-w-[95%] mx-auto">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-semibold text-gray-800">Bejegyzések kezelése</h1>
-            <button @click="toggleCreateModal" 
+            <button @click="toggleCreateModal"
                 class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                        clip-rule="evenodd" />
                 </svg>
                 Új bejegyzés létrehozása
             </button>
@@ -71,9 +97,15 @@ const handleCancelCreate = () => {
             <table class="w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2">Cím</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Dátum</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Műveletek</th>
+                        <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2">
+                            Cím</th>
+                        <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">
+                            Dátum</th>
+                        <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">
+                            Műveletek</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">

@@ -33,7 +33,6 @@ class AdminPostController extends Controller
     }
 
     public function update(Request $request, Post $post) {
-        // Validate the incoming request data
         $validated = $request->validate([
             'imageUrl' => 'required|string|max:16383', // a 16383 save place
             'title' => 'required|string|max:255',
