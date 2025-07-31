@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, computed } from 'vue';
+import { defineEmits, computed, onMounted, onBeforeUnmount } from 'vue';
 import Post from '../../../../classes/Post';
 import FacebookCard from '../../../Index/Components/FacebookCard.vue';
 import { useForm } from '@inertiajs/vue3';
@@ -45,25 +45,40 @@ const saveChanges = () => {
 const closeModal = () => {
   emit('cancel')
 }
+
+// ESC key handling
+const handleKeyDown = (e) => {
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeyDown);
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', handleKeyDown);
+})
 </script>
 
 <template>
   <div class="modal-overlay" @click.self="closeModal">
     <div class="modal-container">
       <div class="modal-header">
-        <h2>{{ isNewPost ? 'Új bejegyzés létrehozása' : 'Bejegyzés szerkesztése' }}</h2>
+        <h2 class="text-xl font-bold text-gray-800">{{ isNewPost ? 'Új bejegyzés létrehozása' : 'Bejegyzés szerkesztése' }}</h2>
         <button @click="closeModal" class="close-btn">&times;</button>
       </div>
 
       <div class="modal-content">
         <div class="manage-post-card">
           <div class="preview-section">
-            <h3>Bejegyzés előnézete</h3>
+            <h3 class="text-lg font-semibold text-gray-700 mb-6">Bejegyzés előnézete</h3>
             <FacebookCard :post="updatedPost" />
           </div>
 
           <div class="edit-section">
-            <h3>{{ isNewPost ? 'Új bejegyzés adatai' : 'Részletek szerkesztése' }}</h3>
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">{{ isNewPost ? 'Új bejegyzés adatai' : 'Részletek szerkesztése' }}</h3>
             <form @submit.prevent="saveChanges">
               <div class="form-group">
                 <label for="imageUrl">Kép URL</label>

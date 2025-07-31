@@ -17,9 +17,7 @@ const props = defineProps({
 
 const posts = computed(() => props.posts.map((post) => new Post(post)).sort((p1, p2) => p2.getDate() - p1.getDate()))
 
-const showCreatePostModal = ref({
-    show: false
-})
+const showCreatePostModal = ref(false)
 
 const createPost = (postData) => {
     router.post(route('posts.store'), {
@@ -56,65 +54,38 @@ const handleCancelCreate = () => {
 </script>
 
 <template>
-    <div class="posts-header">
-        <h1>Bejegyzések kezelése</h1>
-        <button @click="toggleCreateModal" class="create-btn">
-            Új bejegyzés létrehozása
-        </button>
-    </div>
+    <!-- Removed container class to allow full width -->
+    <div class="px-4 py-8 w-full max-w-[95%] mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Bejegyzések kezelése</h1>
+            <button @click="toggleCreateModal" 
+                class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                Új bejegyzés létrehozása
+            </button>
+        </div>
 
-    <table class="posts-table">
-        <thead>
-            <tr>
-                <th>Cím</th>
-                <th>Dátum</th>
-                <th>Műveletek</th>
-            </tr>
-        </thead>
-        <tbody>
-            <PostLine v-for="post in posts" :key="post.getId()" :post="post" @update="updatePost"
-                @delete="deletePost" />
-        </tbody>
-    </table>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <table class="w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2">Cím</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Dátum</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Műveletek</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <PostLine v-for="post in posts" :key="post.getId()" :post="post" @update="updatePost"
+                        @delete="deletePost" />
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- Create Post Modal -->
     <ManagePostCard v-if="showCreatePostModal"
         :post="new Post({ id: 0, date: new Date(), imageUrl: '', title: '', text: '' })" @save="createPost"
         @cancel="handleCancelCreate" :isNewPost="true" />
 </template>
-
-<style scoped>
-.posts-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.create-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.posts-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.posts-table th {
-    background-color: #f2f2f2;
-    padding: 10px;
-    text-align: left;
-    border-bottom: 2px solid #ddd;
-}
-
-.posts-table tbody tr:hover {
-    background-color: #f5f5f5;
-}
-</style>
