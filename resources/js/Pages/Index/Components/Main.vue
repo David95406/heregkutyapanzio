@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
     <div class="flex flex-col tablet:flex-row w-full manrope-normal">
         <section class="w-full @h-1/2">
-            <img src="https://placehold.co/600x400" class="w-full h-full object-cover">
+            <img src="../../../../images/test.png" class="w-full h-full object-cover">
         </section>
         <section class="flex flex-col w-full bg-light-blue @h-1/2">
             <SplitText text="Kezdőlap > Blog" class-name="p-4 text-textBlue manrope-bold" :delay="0" :duration="0.8" ease="power3.out"
