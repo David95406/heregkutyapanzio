@@ -14,15 +14,17 @@ class AdminAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'username' => "required|min:4|max:200|string",
             'password' => "required|min:4|max:200|string",
-            'remember_me' => "boolean" // piotr!
+            'remember_me' => "boolean"
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember_me'))) {
-            $request->session()->regenerate();
+        $credentials = $request->only('username', 'password');
+        $remember = $request->boolean('remember_me');
 
+        if (Auth::guard('admin')->attempt($credentials, $remember)) {
+            $request->session()->regenerate();
             return redirect()->intended(route('admin.index'));
         }
 
