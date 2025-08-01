@@ -1,5 +1,5 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 import AdminLayout from '../../Layout/AdminLayout.vue';
 import { computed, nextTick, reactive, ref, watch } from 'vue';
@@ -99,6 +99,24 @@ const getBookingStatusText = (booking) => {
   return booking.getAccepted() ? 'Elfogadva' : 'Elutasítva'
 }
 
+const bookingModalView = reactive({
+  show: false,
+  booking: null,
+  open(booking) {
+    this.show = true
+    this.booking = booking
+  },
+  exit() {
+    this.show = false
+    this.booking = null
+  },
+  refresh() {
+    if (this.booking) {
+      this.booking = bookings.value.find((booking) => booking.getId() == this.booking.getId())
+    }
+  },
+})
+
 const sortingCheckboxes = reactive({
   all: true,
   pendig_email: false, // nincs megerositett email user siderol
@@ -136,7 +154,9 @@ const bookings = computed(() => {
   return bookingInstances.value
     .sort((b1, b2) => b2.getCreated_at() - b1.getCreated_at())
     .filter((booking) => {
-      // Ha az összes ki van választva, ne szűrjünk
+      // remove old booking
+      if (booking.getEnd_date() < new Date()) return false
+
       if (sortingCheckboxes.all) return true;
 
       // Szűrés a bejelölt kategóriák szerint
@@ -161,22 +181,9 @@ const bookings = computed(() => {
     });
 })
 
-const bookingModalView = reactive({
-  show: false,
-  booking: null,
-  open(booking) {
-    this.show = true
-    this.booking = booking
-  },
-  exit() {
-    this.show = false
-    this.booking = null
-  },
-  refresh() {
-    if (this.booking) {
-      this.booking = bookings.value.find((booking) => booking.getId() == this.booking.getId())
-    }
-  },
+const oldBookings = computed(() => {
+  return bookingInstances.value.filter((booking) => booking.getEnd_date() < new Date())
+    .sort((b1, b2) => b2.getCreated_at() - b1.getCreated_at())
 })
 
 </script>
@@ -189,41 +196,38 @@ const bookingModalView = reactive({
     <h1 class="text-2xl font-bold mb-4">Admin</h1>
     <h2 class="text-xl font-semibold mb-6">Foglalások</h2>
     <div class="space-x-4">
-      <button @click="redirectToHome" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Vissza a
-        főoldalra</button>
-      <button @click="redirectToSettings"
-        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Settings</button>
+      <Link href="/" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        Vissza a főoldalra
+      </Link>
     </div>
   </div>
-  <div class="mt-4 flex flex-wrap gap-2">
-    <button @click="() => { sortingCheckboxes.all = true; }"
-      class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded">
-      Összes foglalás
-    </button>
-    <button @click="() => {
-      sortingCheckboxes.pendig_booking = true;
-      sortingCheckboxes.all = false;
-    }" class="px-3 py-1 text-xs bg-yellow-100 hover:bg-yellow-200 rounded">
-      Elbírálásra váró foglalások
-    </button>
-    <button @click="() => {
-      sortingCheckboxes.pendig_email = true;
-      sortingCheckboxes.all = false;
-    }" class="px-3 py-1 text-xs bg-red-100 hover:bg-red-200 rounded">
-      Email megerősítésre várók
-    </button>
-    <button @click="() => {
-      sortingCheckboxes.accepted_booking = true;
-      sortingCheckboxes.all = false;
-    }" class="px-3 py-1 text-xs bg-red-100 hover:bg-red-200 rounded">
-      Elfogadott foglalások
-    </button>
-    <button @click="() => {
-      sortingCheckboxes.rejected_booking = true;
-      sortingCheckboxes.all = false;
-    }" class="px-3 py-1 text-xs bg-red-100 hover:bg-red-200 rounded">
-      Elutasított foglalások
-    </button>
+  <div class="mt-6 space-y-4">
+    <h2>Foglalások rendezése</h2>
+    <div class="flex items-center space-x-2">
+      <input id="all" type="checkbox" v-model="sortingCheckboxes.all"
+        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+      <label for="all" class="text-sm font-medium text-gray-700">Összes</label>
+    </div>
+    <div class="flex items-center space-x-2">
+      <input id="pending-email" type="checkbox" v-model="sortingCheckboxes.pendig_email"
+        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+      <label for="pending-email" class="text-sm font-medium text-gray-700">Függőben lévő email</label>
+    </div>
+    <div class="flex items-center space-x-2">
+      <input id="pending-booking" type="checkbox" v-model="sortingCheckboxes.pendig_booking"
+        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+      <label for="pending-booking" class="text-sm font-medium text-gray-700">Függőben lévő foglalás</label>
+    </div>
+    <div class="flex items-center space-x-2">
+      <input id="accepted-booking" type="checkbox" v-model="sortingCheckboxes.accepted_booking"
+        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+      <label for="accepted-booking" class="text-sm font-medium text-gray-700">Elfogadott foglalás</label>
+    </div>
+    <div class="flex items-center space-x-2">
+      <input id="rejected-booking" type="checkbox" v-model="sortingCheckboxes.rejected_booking"
+        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+      <label for="rejected-booking" class="text-sm font-medium text-gray-700">Elutasított foglalás</label>
+    </div>
   </div>
   <div class="overflow-x-auto mt-6">
     <table v-if="bookings.length != 0" class="min-w-full bg-white border border-gray-200 rounded-lg">
@@ -275,10 +279,15 @@ const bookingModalView = reactive({
           <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getVerificationText() }}</td>
           <td class="px-4 py-3 whitespace-nowrap text-sm space-x-2">
             <div v-if="booking.getAccepted() == null">
-              <button v-if="!getBookingStatus(booking.getId())" @click="accept(booking.getId())"
-                class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition">Elfogadás</button>
-              <button v-if="!getBookingStatus(booking.getId())" @click="deny(booking.getId())"
-                class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">Elutasítás</button>
+              <div v-if="!booking.getVerified_at()">
+                <p class="text-gray-500" title="Nincs megerősített email">Nem lehet műveletet elvégezni.</p>
+              </div>
+              <div v-else>
+                <button v-if="!getBookingStatus(booking.getId())" @click="accept(booking.getId())"
+                  class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition">Elfogadás</button>
+                <button v-if="!getBookingStatus(booking.getId())" @click="deny(booking.getId())"
+                  class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">Elutasítás</button>
+              </div>
             </div>
             <div v-else>
               <p :class="booking.getAccepted() ? 'text-green-400' : 'text-red-400'">
@@ -291,6 +300,45 @@ const bookingModalView = reactive({
     <h1 v-else class="text-2xl manrope-bold text-center">A foglalási lista üres</h1>
   </div>
   <VDatePicker mode="date" v-model.range="range" :attributes='attrs' :disabled-dates="disabledDates" />
+
+  <div v-if="oldBookings.length > 0" class="mt-6">
+    <details class="bg-gray-100 p-4 rounded-lg">
+      <summary class="cursor-pointer text-lg font-semibold text-gray-700">Múltbeli foglalások</summary>
+      <table class="min-w-full bg-white border border-gray-200 rounded-lg mt-4">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Létrehozva</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Foglalási név
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email cím</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefonszám</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Megjegyzés</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Típus</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kezdeti dátum
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vége dátum</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr v-for="booking in oldBookings" :key="booking.getId()" class="hover:bg-gray-50">
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ formatDate(booking.getCreated_at()) }}</td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getName() }}</td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getEmail() }}</td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ booking.getPhone() }}</td>
+            <td class="px-4 py-3 text-sm text-gray-700 max-w-xs truncate">{{ booking.getDescription() }}</td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">
+              <span class="px-2 py-1 text-xs rounded-full"
+                :class="booking.isDayCare() ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'">
+                {{ booking.getBookingTypeString() }}
+              </span>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ formatDate(booking.getStart_date()) }}</td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ formatDate(booking.getEnd_date()) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
 </template>
 
 <style scoped></style>
