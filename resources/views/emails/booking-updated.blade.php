@@ -62,7 +62,7 @@
         <div class="content">
             <p>Tisztelt {{ $booking->name }}!</p>
             
-            <p>Ezúton tájékoztatjuk, hogy foglalásának adatai módosításra kerültek a Hereg Kutyapanzió rendszerében.</p>
+            <p>Ezúton tájékoztatjuk, hogy foglalásának adatai módosításra kerültek a Héreg Kutyapanzió rendszerében.</p>
             
             <p>A módosított mező: <span class="highlight">{{ $updatedField == 'start_date' ? 'Kezdő dátum' : ($updatedField == 'end_date' ? 'Befejező dátum' : 'Megjegyzés') }}</span></p>
             
@@ -97,7 +97,7 @@
             <p>Köszönjük, hogy minket választott!</p>
             
             <p>Üdvözlettel,<br>
-            Hereg Kutyapanzió csapata</p>
+            Héreg Kutyapanzió csapata</p>
         </div>
         
         <div class="footer">

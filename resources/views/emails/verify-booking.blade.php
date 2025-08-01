@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Foglalás Megerősítése - Hereg Kutyapanzió</title>
+    <title>Foglalás Megerősítése - Héreg Kutyapanzió</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f4f4f4; color: #333333;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -13,7 +13,7 @@
                     <!-- Fejléc -->
                     <tr>
                         <td style="background-color: #3b82f6; padding: 30px 40px; border-radius: 8px 8px 0 0; text-align: center;">
-                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Hereg Kutyapanzió</h1>
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Héreg Kutyapanzió</h1>
                             <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 18px;">Foglalás megerősítése</p>
                         </td>
                     </tr>
@@ -24,7 +24,7 @@
                             <h2 style="margin-top: 0; color: #333333;">Kedves {{ $booking->name }}!</h2>
                             
                             <p style="margin-bottom: 25px; line-height: 1.5; font-size: 16px;">
-                                Köszönjük, hogy a <strong>Hereg Kutyapanziót</strong> választotta! Foglalása rendszerünkben rögzítésre került, de a véglegesítéshez kérjük, erősítse meg szándékát az alábbi gombra kattintva.
+                                Köszönjük, hogy a <strong>Héreg Kutyapanziót</strong> választotta! Foglalása rendszerünkben rögzítésre került, de a véglegesítéshez kérjük, erősítse meg szándékát az alábbi gombra kattintva.
                             </p>
                             
                             <table width="100%" style="border-collapse: collapse; margin-bottom: 30px; border: 1px solid #e5e7eb;">
@@ -83,7 +83,7 @@
                                 Kérdése van? Keressen minket bizalommal!
                             </p>
                             <p style="margin: 0;">
-                                © {{ date('Y') }} Hereg Kutyapanzió - Minden jog fenntartva
+                                © {{ date('Y') }} Héreg Kutyapanzió - Minden jog fenntartva
                             </p>
                         </td>
                     </tr>

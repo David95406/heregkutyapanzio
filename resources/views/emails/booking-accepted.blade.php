@@ -12,7 +12,7 @@
                     <!-- Fejléc -->
                     <tr>
                         <td style="background-color: #22c55e; padding: 30px 40px; border-radius: 8px 8px 0 0; text-align: center;">
-                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Hereg Kutyapanzió</h1>
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Héreg Kutyapanzió</h1>
                             <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 18px;">Foglalását elfogadtuk!</p>
                         </td>
                     </tr>
@@ -70,7 +70,7 @@
                             </p>
                             
                             <p style="color: #22c55e; margin-bottom: 0; font-size: 16px; font-weight: bold;">
-                                Köszönjük, hogy a Hereg Kutyapaznziót választotta! Szeretettel várjuk Önt és kedvencét!
+                                Köszönjük, hogy a Héreg Kutyapaznziót választotta! Szeretettel várjuk Önt és kedvencét!
                             </p>
                         </td>
                     </tr>
@@ -79,7 +79,7 @@
                     <tr>
                         <td style="background-color: #f3f4f6; padding: 20px; border-radius: 0 0 8px 8px; text-align: center; color: #666666; font-size: 14px;">
                             <p style="margin: 0 0 10px 0;">
-                                <strong>Hereg Kutyapanzió</strong><br>
+                                <strong>Héreg Kutyapanzió</strong><br>
                                 Telefon: +36 20 123 4567<br>
                                 Email: info@heregkutyapanzio.hu
                             </p>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Mail\BookingAdminMail;
-use App\Mail\TestEmail;
 use App\Mail\VerifyBooking;
 use App\Models\BlockedDate;
 use App\Models\Booking;
@@ -64,7 +63,7 @@ class BookingController extends Controller
                 // Mail::to($validatedData['email'])->send(new TestEmail($validatedData['name']));
                 Mail::to($booking->email)->send(new VerifyBooking($booking));
             } catch (Exception $e) {
-                dd('Mail sending failed: ' . $e->getMessage());
+                Log::error('Mail sending failed: ' . $e->getMessage());
             }
 
             return redirect()->back()->with('success', 'Foglalás sikeresen elküldve!');

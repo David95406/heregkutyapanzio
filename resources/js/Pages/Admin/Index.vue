@@ -2,7 +2,7 @@
 import { Link, router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 import AdminLayout from '../../Layout/AdminLayout.vue';
-import { computed, nextTick, reactive, ref, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import Booking from '../../classes/Booking';
 import BookingModal from '../../Components/BookingModal.vue';
 import { formatDate } from '../../utils';
@@ -14,14 +14,6 @@ defineOptions({
 const props = defineProps({
   bookings: Array
 })
-
-const redirectToHome = (() => {
-  router.get(route('index'))
-})
-
-const redirectToSettings = () => {
-  router.get(route("admin.settings"))
-}
 
 const range = ref({
   start: null,
@@ -65,20 +57,22 @@ const disabledDates = ref([]);
 
 const bookingStatuses = ref(new Map())
 
-const accept = (bookingId, isModal = false) => { // confirm?
-  router.patch(route("admin.booking.accept", { booking: bookingId }), {}, {
-    preserveScroll: true,
-    onSuccess: () => {
-      if (isModal) bookingModalView.refresh()
-    },
-    onError: () => {
-      alert('Hiba történt a művelet során.')
-    }
-  });
+const accept = (bookingId, isModal = false) => {
+  if (confirm("Biztosan megerősíti ezt a foglalást?")) {
+    router.patch(route("admin.booking.accept", { booking: bookingId }), {}, {
+      preserveScroll: true,
+      onSuccess: () => {
+        if (isModal) bookingModalView.refresh()
+      },
+      onError: () => {
+        alert('Hiba történt a művelet során.')
+      }
+    });
+  }
 }
 
 const deny = (bookingId, isModal = false) => {
-  if (confirm('Biztosan elutasítja?')) {
+  if (confirm('Biztosan elutasítja ezt a foglalást?')) {
     router.patch(route("admin.booking.deny", { booking: bookingId }), {}, {
       preserveScroll: true,
       onSuccess: () => {

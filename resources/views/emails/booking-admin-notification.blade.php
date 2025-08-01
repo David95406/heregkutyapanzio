@@ -74,7 +74,7 @@
     <div class="container">
         <div class="header">
             <h1>Új Megerősített Foglalás</h1>
-            <p>Hereg Kutyapanzió</p>
+            <p>Héreg Kutyapanzió</p>
         </div>
         
         <p>Tisztelt Adminisztrátor!</p>
@@ -133,7 +133,7 @@
         </div>
         
         <p style="margin-top: 30px; font-size: 12px; color: #64748b; text-align: center;">
-            Ez egy automatikus értesítés, amely a Hereg Kutyapanzió foglalási rendszeréből érkezett.
+            Ez egy automatikus értesítés, amely a Héreg Kutyapanzió foglalási rendszeréből érkezett.
         </p>
     </div>
 </body>

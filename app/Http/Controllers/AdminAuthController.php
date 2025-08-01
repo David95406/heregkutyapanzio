@@ -20,7 +20,7 @@ class AdminAuthController extends Controller
             'remember_me' => "boolean" // piotr!
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
+        if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember_me'))) {
             $request->session()->regenerate();
 
             return redirect()->intended(route('admin.index'));
