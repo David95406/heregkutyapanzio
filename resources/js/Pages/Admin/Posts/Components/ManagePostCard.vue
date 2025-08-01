@@ -74,7 +74,7 @@ onBeforeUnmount(() => {
         <div class="manage-post-card">
           <div class="preview-section">
             <h3 class="text-lg font-semibold text-gray-700 mb-6">Bejegyzés előnézete</h3>
-            <FacebookCard :post="updatedPost" />
+            <FacebookCard :post="updatedPost"/>
           </div>
 
           <div class="edit-section">

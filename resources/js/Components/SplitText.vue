@@ -61,6 +61,11 @@ const initializeAnimation = async () => {
   if (typeof window === 'undefined' || !textRef.value || !props.text) return;
 
   await nextTick();
+  
+  // Wait for fonts to be loaded before initializing SplitText
+  if (document.fonts && document.fonts.ready) {
+    await document.fonts.ready;
+  }
 
   const el = textRef.value;
 

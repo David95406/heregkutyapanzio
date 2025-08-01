@@ -13,7 +13,7 @@ const logout = () => {
     <header>
         <nav class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
             <div class="flex items-center space-x-4">
-                <span class="text-xl font-bold text-gray-800">Logo</span>
+                <img class="h-10 w-auto" src="../../images/logo.svg" alt="Company Logo">
                 <Link href="/admin" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded transition">
                 Kezdőlap
                 </Link>

@@ -27,7 +27,7 @@ const navigation = computed(() => {
             <div class="relative flex items-center justify-between h-16">
                 <!-- Logo -->
                 <div class="flex items-center flex-shrink-0">
-                    <img class="h-10 w-auto" src="https://placehold.co/100x100" alt="Company Logo">
+                    <img class="h-10 w-auto" src="../../../images/logo.svg" alt="Company Logo">
                 </div>
 
                 <!-- Desktop navigation -->

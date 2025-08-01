@@ -8,7 +8,7 @@ import { Link } from '@inertiajs/vue3'
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Logo and Description -->
                 <div class="flex flex-col items-center md:items-start">
-                    <img src="/logo.png" alt="Hereg Kutyapanzió" class="h-16 mb-4">
+                    <img src="../../../images/logo.svg" alt="Hereg Kutyapanzió" class="h-16 mb-4">
                     <p class="">Professzionális kutyapanzió szolgáltatás, ahol kedvence otthon érezheti magát.</p>
                 </div>
                             

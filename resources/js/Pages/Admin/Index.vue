@@ -197,36 +197,38 @@ const oldBookings = computed(() => {
     <h2 class="text-xl font-semibold mb-6">Foglalások</h2>
     <div class="space-x-4">
       <Link href="/" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-        Vissza a főoldalra
+      Vissza a főoldalra
       </Link>
     </div>
   </div>
   <div class="mt-6 space-y-4">
-    <h2>Foglalások rendezése</h2>
-    <div class="flex items-center space-x-2">
-      <input id="all" type="checkbox" v-model="sortingCheckboxes.all"
-        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-      <label for="all" class="text-sm font-medium text-gray-700">Összes</label>
-    </div>
-    <div class="flex items-center space-x-2">
-      <input id="pending-email" type="checkbox" v-model="sortingCheckboxes.pendig_email"
-        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-      <label for="pending-email" class="text-sm font-medium text-gray-700">Függőben lévő email</label>
-    </div>
-    <div class="flex items-center space-x-2">
-      <input id="pending-booking" type="checkbox" v-model="sortingCheckboxes.pendig_booking"
-        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-      <label for="pending-booking" class="text-sm font-medium text-gray-700">Függőben lévő foglalás</label>
-    </div>
-    <div class="flex items-center space-x-2">
-      <input id="accepted-booking" type="checkbox" v-model="sortingCheckboxes.accepted_booking"
-        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-      <label for="accepted-booking" class="text-sm font-medium text-gray-700">Elfogadott foglalás</label>
-    </div>
-    <div class="flex items-center space-x-2">
-      <input id="rejected-booking" type="checkbox" v-model="sortingCheckboxes.rejected_booking"
-        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-      <label for="rejected-booking" class="text-sm font-medium text-gray-700">Elutasított foglalás</label>
+    <h2 class="mx-3.5">Foglalások rendezése</h2>
+    <div class="flex flex-row">
+      <div class="flex items-center mx-2">
+        <input id="all" type="checkbox" v-model="sortingCheckboxes.all"
+          class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mx-1">
+        <label for="all" class="text-sm font-medium text-gray-700">Összes</label>
+      </div>
+      <div class="flex items-center mx-2">
+        <input id="pending-email" type="checkbox" v-model="sortingCheckboxes.pendig_email"
+          class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mx-1">
+        <label for="pending-email" class="text-sm font-medium text-gray-700">Függőben lévő email</label>
+      </div>
+      <div class="flex items-center mx-2">
+        <input id="pending-booking" type="checkbox" v-model="sortingCheckboxes.pendig_booking"
+          class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mx-1">
+        <label for="pending-booking" class="text-sm font-medium text-gray-700">Függőben lévő foglalás</label>
+      </div>
+      <div class="flex items-center mx-2">
+        <input id="accepted-booking" type="checkbox" v-model="sortingCheckboxes.accepted_booking"
+          class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mx-1">
+        <label for="accepted-booking" class="text-sm font-medium text-gray-700">Elfogadott foglalás</label>
+      </div>
+      <div class="flex items-center mx-2">
+        <input id="rejected-booking" type="checkbox" v-model="sortingCheckboxes.rejected_booking"
+          class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mx-1">
+        <label for="rejected-booking" class="text-sm font-medium text-gray-700">Elutasított foglalás</label>
+      </div>
     </div>
   </div>
   <div class="overflow-x-auto mt-6">
@@ -284,7 +286,7 @@ const oldBookings = computed(() => {
               </div>
               <div v-else>
                 <button v-if="!getBookingStatus(booking.getId())" @click="accept(booking.getId())"
-                  class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition">Elfogadás</button>
+                  class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition mx-2">Elfogadás</button>
                 <button v-if="!getBookingStatus(booking.getId())" @click="deny(booking.getId())"
                   class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">Elutasítás</button>
               </div>
@@ -299,7 +301,9 @@ const oldBookings = computed(() => {
     </table>
     <h1 v-else class="text-2xl manrope-bold text-center">A foglalási lista üres</h1>
   </div>
-  <VDatePicker mode="date" v-model.range="range" :attributes='attrs' :disabled-dates="disabledDates" />
+  <div class="flex justify-center m-5">
+    <VDatePicker mode="date" v-model.range="range" :attributes='attrs' :disabled-dates="disabledDates" />
+  </div>
 
   <div v-if="oldBookings.length > 0" class="mt-6">
     <details class="bg-gray-100 p-4 rounded-lg">
