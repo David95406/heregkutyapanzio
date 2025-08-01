@@ -97,17 +97,22 @@ console.log(props.blockedDates)
         <ul class="list-disc">
           <li v-for="(date, index) in blockedDates" :key="index" class="flex items-center justify-between mb-2">
             <span>{{ date.toLocaleDateString() }}</span>
-            <button @click="resetDate(date)" class="ml-2 px-2 py-0.5 bg-red-500 text-white rounded hover:bg-red-600" title="Delete date">
+            <button @click="resetDate(date)" class="ml-2 px-2 py-0.5 bg-red-500 text-white rounded hover:bg-red-600"
+              title="Delete date">
               Dátum feloldása
             </button>
           </li>
         </ul>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="resetDates">Összes dátum feloldása</button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="resetDates">Összes
+          dátum feloldása</button>
       </div>
     </div>
-    <h1 v-if="dragValue">{{ dragValue.start }}</h1>
-    <h1 v-if="dragValue">{{ dragValue.end }}</h1>
-    <button class="rounded bg-blue-50" v-if="dragValue" @click="blockDate(dragValue.start, dragValue.end)">Dátum
+    <h1 class="manrope-bold text-xl">Kiválasztott Dátum</h1>
+    <div class="flex flex-row">
+      <h1 class="manrope-bold" v-if="dragValue">{{ dragValue.start.toLocaleDateString() }}</h1>
+      <h1 class="manrope-bold" v-if="dragValue">-{{ dragValue.end.toLocaleDateString() }}</h1>
+    </div>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded w-fit" v-if="dragValue" @click="blockDate(dragValue.start, dragValue.end)">Dátum
       tiltása</button>
   </section>
 </template>
