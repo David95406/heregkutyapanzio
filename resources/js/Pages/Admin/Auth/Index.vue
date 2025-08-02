@@ -2,15 +2,16 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
+import EmptyLayout from '../../../Layout/EmptyLayout.vue';
 
 defineOptions({
-  layout: undefined
+  layout: EmptyLayout
 })
 
 const adminForm = useForm({
   username: '',
   password: '',
-  remember: false
+  remember_me: false
 })
 
 const submit = () => {
@@ -51,12 +52,12 @@ const submit = () => {
         
         <div class="mb-6 flex items-center">
           <input 
-            id="remember"
+            id="remember_me"
             type="checkbox"
-            v-model="adminForm.remember"
+            v-model="adminForm.remember_me"
             class="mr-2"
           >
-          <label class="text-gray-700" for="remember">Emlékezz rám</label>
+          <label class="text-gray-700" for="remember_me">Emlékezz rám</label>
         </div>
         
         <button 

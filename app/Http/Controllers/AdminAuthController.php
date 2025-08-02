@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
@@ -14,15 +14,17 @@ class AdminAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'username' => "required|min:4|max:200|string",
             'password' => "required|min:4|max:200|string",
-            'remember_me' => "boolean" // piotr!
+            'remember_me' => "boolean"
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
+        $credentials = $request->only('username', 'password');
+        $remember = $request->boolean('remember_me');
 
+        if (Auth::guard('admin')->attempt($credentials, $remember)) {
+            $request->session()->regenerate();
             return redirect()->intended(route('admin.index'));
         }
 
