@@ -35,8 +35,9 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     // settings
     Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
-    Route::put('settings/graph-api', [SettingsController::class, 'updateGraphApiKey'])->name('settings.update-graph-api');
-    Route::put('settings/change-password', [AdminController::class, 'changePassword'])->name('settings.change-password');
+    Route::put('/admin/settings/about1', [SettingsController::class, 'updateAbout1'])->name('settings.update-about1');
+    Route::put('/admin/settings/about2', [SettingsController::class, 'updateAbout2'])->name('settings.update-about2');
+    //Route::put('settings/change-password', [AdminController::class, 'changePassword'])->name('settings.change-password');
     // booking
     Route::put('booking/{booking}', [AdminBookingController::class, 'update'])->name('admin.booking.update');
     Route::delete('booking/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');

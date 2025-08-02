@@ -1,5 +1,25 @@
 <script setup>
+import { computed } from 'vue';
 import ContentBlock from './Components/Contentblock.vue';
+
+const props = defineProps({
+    about1: {
+        type: String,
+        required: false
+    },
+    about2: {
+        type: String,
+        required: false
+    }
+})
+
+const defaultAboutTexts = {
+    about1: "Koss Krisztina Zsuzsanna vagyok, világéletemben voltak állataim. 30 éves kutya nevelői és kiképzői tapasztalattal vállalom kutyák illetve kisállatok (macskák, rágcsálók, madarak akár haszonállatok) gondozását saját valamint az állatok otthonában egyaránt.",
+    about2: "Második bekezdés tartalma..."
+}
+
+const aboutText1 = computed(() => props.about1 || defaultAboutTexts.about1);
+const aboutText2 = computed(() => props.about2 || defaultAboutTexts.about2);
 
 const icons = {
     phone: `
@@ -33,9 +53,10 @@ const aboutItems = [
             subtitle="Keress minket bizalommal elérhetőségeink egyikén, vagy írj nekünk üzenetet!"
             image="https://placehold.co/600x400" :items="aboutItems" :reverse="false" />
         <ContentBlock breadcrumb="Történetünk" title="Rólunk"
-            subtitle="Koss Krisztina Zsuzsanna vagyok, világéletemben voltak állataim. 30 éves kutya nevelői és kiképzői tapasztalattal vállalom kutyák illetve kisállatok (macskák, rágcsálók, madarak akár haszonállatok) gondozását saját valamint az állatok otthonában egyaránt."
+            :subtitle="aboutText1"
             image="https://placehold.co/600x400" :reverse="true" />
-        <ContentBlock breadcrumb="Történetünk" title="Rólunk" subtitle="Második bekezdés tartalma..."
+        <ContentBlock breadcrumb="Történetünk" title="Rólunk" 
+            :subtitle="aboutText2"
             image="https://placehold.co/600x400" :reverse="false" />
     </section>
 </template>
