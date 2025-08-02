@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\Service;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Log;
@@ -22,22 +23,26 @@ class AdminController extends Controller
 
     public function changePassword(Request $request) {
         try {
-            $validatedData = $request->validate([
-                'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()->symbols()],
+            $validatedRequest = $request->validate([
+                'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()],
             ]);
 
-            $user = $request->user();
-            $user->password = Hash::make($validatedData['password']);
-            $user->save();
+            $admin = Auth::guard('admin')->user();
 
+            if (!$admin) {
+                return back()->withErrors(['password' => 'Nem sikerült azonosítani a felhasználót.']);
+            }
+            
+            $admin->password = Hash::make($validatedRequest['password']);
+            $admin->save();
 
-            //return back()->with('message', 'Password updated successfully');
-            $this->destroy($request);
+            $AdminAuthController = new AdminAuthController();
+            $AdminAuthController->logout($request);
+            return back()->with('message', 'Jelszó sikeresen módosítva!');
         } catch (Exception $e) {
-            Log::error('Error changing password: ' . $e->getMessage(), ['exception' => $e]);
-            return back()->withErrors(['error' => 'Failed to update password. Please try again.']);
+            Log::error('Error changing password: ' . $e->getMessage());
+            return back()->withErrors(['password' => 'Hiba történt a jelszó módosítása során.']);
         }
-        
     }
 
     function destroy(Request $request) {

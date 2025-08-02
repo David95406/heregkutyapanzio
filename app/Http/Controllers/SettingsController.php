@@ -3,18 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
-use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Password;
 
 class SettingsController extends Controller
 {
     public function index() {
         $settings = Setting::all();
-
-        // Ensure about1 and about2 settings exist with default values if not present
+        
         if (!$settings->contains('key', 'about1')) {
             Setting::create([
                 'key' => 'about1',
@@ -29,7 +24,6 @@ class SettingsController extends Controller
             ]);
         }
 
-        // Refresh settings after ensuring they exist
         $settings = Setting::all();
 
         return inertia("Admin/Settings/Index", [
@@ -38,45 +32,36 @@ class SettingsController extends Controller
     }
 
     public function updateAbout1(Request $request) {
-        $validatedRequest = $request->validate([
-            "about1" => 'required|string'
-        ]);
+        try {
+            $validatedRequest = $request->validate([
+                "about1" => 'required|string|max:1400|min:1'
+            ]);
 
-        Setting::updateOrCreate(
-            ['key' => 'about1'],
-            ['value' => $validatedRequest['about1']]
-        );
+            Setting::updateOrCreate(
+                ['key' => 'about1'],
+                ['value' => $validatedRequest['about1']]
+            );
 
-        return back()->with('message', 'Rólunk oldal 1. része sikeresen frissítve!');
+            return back()->with('message', 'Rólunk oldal 1. része sikeresen frissítve!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Hiba történt a frissítés során: ' . $e->getMessage()]);
+        }
     }
 
     public function updateAbout2(Request $request) {
-        $validatedRequest = $request->validate([
-            "about2" => 'required|string'
-        ]);
+        try {
+            $validatedRequest = $request->validate([
+                "about2" => 'required|string|max:1400|min:1'
+            ]);
 
-        Setting::updateOrCreate(
-            ['key' => 'about2'],
-            ['value' => $validatedRequest['about2']]
-        );
+            Setting::updateOrCreate(
+                ['key' => 'about2'],
+                ['value' => $validatedRequest['about2']]
+            );
 
-        return back()->with('message', 'Rólunk oldal 2. része sikeresen frissítve!');
-    }
-
-    public function changePassword(Request $request) {
-        $validatedRequest = $request->validate([
-            'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()],
-        ]);
-
-        $admin = Auth::guard('admin')->user();
-        
-        if (!$admin) {
-            return back()->withErrors(['password' => 'Nem sikerült azonosítani a felhasználót.']);
+            return back()->with('message', 'Rólunk oldal 2. része sikeresen frissítve!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Hiba történt a frissítés során: ' . $e->getMessage()]);
         }
-        
-        $admin->password = Hash::make($validatedRequest['password']);
-        $admin->save();
-
-        return back()->with('message', 'Jelszó sikeresen módosítva!');
     }
 }

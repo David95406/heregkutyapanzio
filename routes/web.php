@@ -37,10 +37,9 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/admin/settings/about1', [SettingsController::class, 'updateAbout1'])->name('settings.update-about1');
     Route::put('/admin/settings/about2', [SettingsController::class, 'updateAbout2'])->name('settings.update-about2');
-    //Route::put('settings/change-password', [AdminController::class, 'changePassword'])->name('settings.change-password');
+    Route::put('settings/change-password', [AdminController::class, 'changePassword'])->name('settings.change-password');
     // booking
     Route::put('booking/{booking}', [AdminBookingController::class, 'update'])->name('admin.booking.update');
-    Route::delete('booking/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');
     Route::patch('booking/{booking}/accept', [AdminBookingController::class, 'accept'])->name('admin.booking.accept');
     Route::patch('booking/{booking}/deny', [AdminBookingController::class, 'deny'])->name('admin.booking.deny');
     // blocked date
@@ -48,3 +47,5 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     // posts
     Route::resource('posts', AdminPostController::class)->only(['index', 'store', 'update', 'destroy']);
 });
+
+// Route::delete('booking/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');

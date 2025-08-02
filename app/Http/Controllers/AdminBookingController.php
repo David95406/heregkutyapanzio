@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Mail;
 
 class AdminBookingController extends Controller
 {
-    //request auth es try catch
     private function changeStatus(Request $request, Booking $booking, bool $accepted) {
         if ($request->user() && Auth::guard('admin')->check()) {
             $booking->update(['accepted' => $accepted]);

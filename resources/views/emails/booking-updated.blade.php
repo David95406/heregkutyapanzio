@@ -68,7 +68,6 @@
             
             <div class="booking-info">
                 <h3>Foglalás részletei:</h3>
-                <p><span class="field-name">Foglalási azonosító:</span> #{{ $booking->id }}</p>
                 <p><span class="field-name">Név:</span> {{ $booking->name }}</p>
                 <p><span class="field-name">Email:</span> {{ $booking->email }}</p>
                 <p><span class="field-name">Telefonszám:</span> {{ $booking->phone }}</p>
@@ -79,15 +78,6 @@
                     <p><span class="field-name">Megjegyzés:</span> {{ $booking->description }}</p>
                 @endif
                 
-                <p><span class="field-name">Foglalás állapota:</span> 
-                    @if($booking->accepted === null)
-                        Függőben
-                    @elseif($booking->accepted === true)
-                        Elfogadva
-                    @else
-                        Elutasítva
-                    @endif
-                </p>
             </div>
             
             <p>Ha bármilyen kérdése van a foglalással kapcsolatban, kérjük vegye fel velünk a kapcsolatot az alábbi elérhetőségek egyikén:</p>
