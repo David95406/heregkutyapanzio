@@ -77,7 +77,9 @@ const inactivePosts = computed(() => {
     const sortedPosts = [...posts.value].sort((a, b) => b.getDate() > a.getDate() ? 1 : -1);
     return sortedPosts.slice(9);
 });
-console.log(inactivePosts.value.at(9))
+const activePosts = computed(() => {
+    return posts.value.slice(0, 9);
+});
 const handleCancelCreate = () => {
     toggleCreateModal()
 }
@@ -114,7 +116,7 @@ const handleCancelCreate = () => {
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <PostLine v-for="post in posts" :key="post.getId()" :post="post" @update="updatePost"
+                    <PostLine v-for="post in activePosts" :key="post.getId()" :post="post" @update="updatePost"
                         @delete="deletePost" />
                 </tbody>
             </table>
