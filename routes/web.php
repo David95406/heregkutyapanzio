@@ -22,9 +22,7 @@ Route::get('foglalas/verify/{token}', [BookingController::class, 'verify'])
     ->name('booking.verify')
     ->middleware('signed');
 
-Route::get('aszf', [PolicyController::class, 'aszf']);
-
-Route::get('adatkezeles', [PolicyController::class, 'privacy']);
+Route::get('gdpr', [PolicyController::class, 'gdpr']);
 
 // admin auth
 Route::middleware('guest:admin')->prefix('admin')->group(function () {

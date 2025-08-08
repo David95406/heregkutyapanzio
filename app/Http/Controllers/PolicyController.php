@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PolicyController extends Controller
 {
-    public function aszf() {
-        return inertia("Aszf/Index");
-    }
 
-    public function privacy() {
+    public function gdpr() {
         return $this->download("adatkezelesi_tajekoztato.pdf");
     }
 
@@ -20,7 +16,6 @@ class PolicyController extends Controller
             abort(404, 'File not found.');
         }
 
-        // Inline megjelenítés letöltés helyett
         return response()->file(
             Storage::disk('public')->path($filename),
             [
