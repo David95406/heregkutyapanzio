@@ -51,11 +51,11 @@ const aboutItems = [
     <section>
         <ContentBlock breadcrumb="Kapcsolat" title="Lépj velünk kapcsolatba"
             subtitle="Keress minket bizalommal elérhetőségeink egyikén, vagy írj nekünk üzenetet!"
-            image="aboutFirst.webp" :items="aboutItems"
+            image="aboutThird.webp" :items="aboutItems"
             :reverse="false" :is-file="true" />
-        <ContentBlock breadcrumb="Történetünk" title="Rólunk" :subtitle="aboutText1" image="aboutSecond.webp"
+        <ContentBlock breadcrumb="Történetünk" title="Rólunk" :subtitle="aboutText1" image="aboutFourth.webp"
             :reverse="true" :is-file="true"/>
-        <ContentBlock breadcrumb="Árak" title="Áraink" :subtitle="aboutText2" image="aboutThird.webp" :reverse="false"
+        <ContentBlock breadcrumb="Árak" title="Áraink" :subtitle="aboutText2" image="aboutSecond.webp" :reverse="false"
             :is-file="true" />
     </section>
 </template>

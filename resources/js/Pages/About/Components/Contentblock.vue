@@ -57,9 +57,9 @@ function getImageUrl(name) {
     </section>
 
     <!-- Kép -->
-    <section class="w-full @h-1/2">
-      <img v-if="!isFile" :src="image" class="w-full h-full object-cover" />
-      <img v-else :src="getImageUrl(image)" class="w-full h-full object-cover" />
+    <section class="w-full @h-1/2 bg-light-blue">
+      <img v-if="!isFile" :src="image" class="w-full h-100 object-cover p-5 rounded-4xl" />
+      <img v-else :src="getImageUrl(image)" class="w-full h-100 object-cover p-5 mt-5 rounded-4xl" />
     </section>
   </div>
 </template>
