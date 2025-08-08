@@ -16,7 +16,7 @@ import { Link } from '@inertiajs/vue3'
                 <div class="text-center md:text-left">
                     <h3 class="font-bold text-lg mb-4 manrope-bold">Kapcsolat</h3>
                     <p class="mb-2">+36 30 225 0113</p>
-                    <p class="mb-4">info@heregkutyapanzio.hu</p>
+                    <p class="mb-4">adrianjozsa81@gmail.com</p>
                     
                     <!-- Social Media Icons -->
                     <div class="flex space-x-4 justify-center md:justify-start">
