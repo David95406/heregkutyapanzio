@@ -20,6 +20,21 @@ class PolicyController extends Controller
             abort(404, 'File not found.');
         }
 
+        // Inline megjelenítés letöltés helyett
+        return response()->file(
+            Storage::disk('public')->path($filename),
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"'
+            ]
+        );
+    }
+
+    private function onlyDownloadFile(string $filename) {
+        if (!Storage::disk('public')->exists($filename)) {
+            abort(404, 'File not found.');
+        }
+
         return Storage::disk('public')->download($filename, $filename, [
             'Content-Type' => 'application/pdf'
         ]);

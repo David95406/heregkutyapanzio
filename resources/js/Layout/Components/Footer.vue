@@ -34,7 +34,7 @@ import { Link } from '@inertiajs/vue3'
             <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-sm">&copy; {{ new Date().getFullYear() }} Héreg Kutyapanzió. Minden jog fenntartva.</p>
                 <div class="mt-4 md:mt-0 text-sm">
-                    <a href="/adatkezeles" class="hover:text-primary transition-colors" download>Adatkezelési tájékoztató</a>
+                    <a href="/adatkezeles" class="hover:text-primary transition-colors">Adatkezelési tájékoztató</a>
                     <span class="mx-2">|</span>
                     <Link href="/aszf" class="hover:text-primary transition-colors">ÁSZF</Link>
                 </div>
