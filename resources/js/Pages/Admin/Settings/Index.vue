@@ -137,31 +137,31 @@ const updateAbout2 = () => {
         <h2 class="text-xl font-semibold mb-4 text-gray-700">Rólunk Oldal 2. Rész</h2>
         <form @submit.prevent="updateAbout2">
           <div class="mb-4">
-            <label for="about2" class="block text-sm font-medium text-gray-700 mb-1">Tartalom</label>
-            <textarea id="about2" v-model="updateAbout2Form.about2" rows="5" maxlength="1400"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Adja meg a Rólunk oldal második részének tartalmát"></textarea>
-            
-            <div class="flex justify-between mt-1">
-              <p class="text-sm text-gray-500">A Rólunk oldal további információi.</p>
-              <p class="text-sm" :class="{
-                'text-gray-500': about2CharCount <= CHAR_LIMIT * 0.8,
-                'text-yellow-600': about2CharCount > CHAR_LIMIT * 0.8 && about2CharCount <= CHAR_LIMIT,
-                'text-red-600': about2CharCount > CHAR_LIMIT
-              }">{{ about2CharCount }}/{{ CHAR_LIMIT }}</p>
-            </div>
-            
-            <div v-if="updateAbout2Form.errors.about2" class="text-red-500 text-sm mt-1">
-              {{ updateAbout2Form.errors.about2 }}
-            </div>
+        <label for="about2" class="block text-sm font-medium text-gray-700 mb-1">Tartalom</label>
+        <textarea id="about2" v-model="updateAbout2Form.about2" rows="5" maxlength="1400"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 whitespace-pre-wrap"
+          placeholder="Adja meg a Rólunk oldal második részének tartalmát"></textarea>
+        
+        <div class="flex justify-between mt-1">
+          <p class="text-sm text-gray-500">A Rólunk oldal további információi. Új sort az Enter billentyűvel hozhatsz létre.</p>
+          <p class="text-sm" :class="{
+            'text-gray-500': about2CharCount <= CHAR_LIMIT * 0.8,
+            'text-yellow-600': about2CharCount > CHAR_LIMIT * 0.8 && about2CharCount <= CHAR_LIMIT,
+            'text-red-600': about2CharCount > CHAR_LIMIT
+          }">{{ about2CharCount }}/{{ CHAR_LIMIT }}</p>
+        </div>
+        
+        <div v-if="updateAbout2Form.errors.about2" class="text-red-500 text-sm mt-1">
+          {{ updateAbout2Form.errors.about2 }}
+        </div>
           </div>
 
           <div class="flex justify-end">
-            <button type="submit"
-              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed"
-              :disabled="!viewState.isAbout2FormValid">
-              Tartalom Mentése
-            </button>
+        <button type="submit"
+          class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed"
+          :disabled="!viewState.isAbout2FormValid">
+          Tartalom Mentése
+        </button>
           </div>
         </form>
       </div>

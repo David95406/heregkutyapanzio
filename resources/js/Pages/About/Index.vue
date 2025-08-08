@@ -15,7 +15,7 @@ const props = defineProps({
 
 const defaultAboutTexts = {
     about1: "Koss Krisztina Zsuzsanna vagyok, világéletemben voltak állataim. 30 éves kutya nevelői és kiképzői tapasztalattal vállalom kutyák illetve kisállatok (macskák, rágcsálók, madarak akár haszonállatok) gondozását saját valamint az állatok otthonában egyaránt.",
-    about2: "Második bekezdés tartalma..."
+    about2: "Második bekezdés tartalma"
 }
 
 const aboutText1 = computed(() => props.about1 || defaultAboutTexts.about1);

@@ -7,9 +7,9 @@
       <div class="p-5">
         <p class="text-textBlue">Rólunk > <span class="font-bold">{{ breadcrumb }}</span></p>
         <div class="flex flex-col flex-grow">
-          <SplitText :text="title" class-name="mt-4 manrope-bold text-textBlue text-4xl tracking-widest" :delay="0" :duration="0.8" ease="power3.out"
-                split-type="chars" :from="{ opacity: 0, y: 40 }" :to="{ opacity: 1, y: 0 }" :threshold="0.1"
-                root-margin="-100px" text-align="start" />
+          <SplitText :text="title" class-name="mt-4 manrope-bold text-textBlue text-4xl tracking-widest" :delay="0"
+            :duration="0.8" ease="power3.out" split-type="chars" :from="{ opacity: 0, y: 40 }"
+            :to="{ opacity: 1, y: 0 }" :threshold="0.1" root-margin="-100px" text-align="start" />
           <h3 class="mt-2 text-textBlue">{{ subtitle }}</h3>
           <div v-if="items?.length" class="mt-4 space-y-2">
             <div v-for="item in items" :key="item.text" class="flex flex-row items-center gap-2 py-2">
@@ -27,7 +27,7 @@
                   {{ item.text }}
                 </a>
                 <span v-else>{{ item.text }}</span>
-              </h3>
+                </h3>
             </div>
           </div>
         </div>
@@ -40,6 +40,12 @@
     </section>
   </div>
 </template>
+
+<style scoped>
+h3{
+  white-space: pre-wrap;
+}
+</style>
 
 <script setup>
 import SplitText from "../../../Components/SplitText.vue";
