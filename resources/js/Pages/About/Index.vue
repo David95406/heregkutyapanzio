@@ -52,9 +52,9 @@ const aboutItems = [
         <ContentBlock breadcrumb="Kapcsolat" title="Lépj velünk kapcsolatba"
             subtitle="Keress minket bizalommal elérhetőségeink egyikén, vagy írj nekünk üzenetet!"
             image="aboutFirst.webp" :items="aboutItems"
-            :reverse="false" />
+            :reverse="false" :is-file="true" />
         <ContentBlock breadcrumb="Történetünk" title="Rólunk" :subtitle="aboutText1" image="aboutSecond.webp"
-            :reverse="true" />
+            :reverse="true" :is-file="true"/>
         <ContentBlock breadcrumb="Árak" title="Áraink" :subtitle="aboutText2" image="aboutThird.webp" :reverse="false"
             :is-file="true" />
     </section>

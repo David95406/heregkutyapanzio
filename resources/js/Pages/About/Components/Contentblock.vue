@@ -1,5 +1,4 @@
 <script setup>
-//      <img src="../../../../images/test.png" alt="">
 import SplitText from "../../../Components/SplitText.vue";
 
 const props = defineProps({
