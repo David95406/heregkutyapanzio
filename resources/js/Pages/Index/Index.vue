@@ -7,7 +7,7 @@ const props = defineProps({
   posts: Array
 })
 
-const posts = computed(() => props.posts.map((post) => new Post(post)))
+const posts = computed(() => props.posts.map((post) => new Post(post)).sort((p1, p2) => p2.getDate() - p1.getDate()))
 
 // Main component??
 </script>

@@ -92,7 +92,6 @@ class AdminBookingController extends Controller
         return redirect()->back()->with('success', 'A foglalás sikeresen frissítve!');
     }
 
-    public function destroy(Request $request) {
-        dd("pass");
-    }
+    
+    //public function destroy(Request $request) { }
 }

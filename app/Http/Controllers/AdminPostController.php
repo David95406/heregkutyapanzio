@@ -9,6 +9,7 @@ class AdminPostController extends Controller
 {
     public function index(Request $request) {
         $posts = Post::all();
+        //$posts = Post::latest()->take(8)->get();
         $posts->transform(function ($post) {
             $post->date = $post->created_at->toDateString();
             return $post;
