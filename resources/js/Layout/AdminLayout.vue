@@ -1,8 +1,7 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
-import { watch } from 'vue';
 
 const logout = () => {
     router.post(route("admin.logout"))

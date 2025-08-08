@@ -6,11 +6,8 @@ import { route } from 'ziggy-js';
 import { toMySqlDateTime } from '../../utils';
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
-import { getDayFromDate, getBookingType } from '../../utils';
-import AnimatedContent from "../../Components/AnimatedContent.vue"
+import { getBookingType } from '../../utils';
 import SplitText from '../../Components/SplitText.vue';
-
-// csabika, ha panzio ne legyen ora!
 
 const props = defineProps({
     blockedDates: Array

@@ -1,6 +1,5 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { computed } from 'vue';
 import EmptyLayout from '../../../Layout/EmptyLayout.vue';
 
 defineOptions({
