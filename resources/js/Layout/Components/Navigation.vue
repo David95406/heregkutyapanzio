@@ -7,8 +7,6 @@ import { Link, usePage } from '@inertiajs/vue3'
 const page = usePage()
 const currentPageComponent = computed(() => page.component)
 
-console.log(currentPageComponent.value)
-
 const navigation = computed(() => {
     return [
         { name: 'Kezdőlap', href: "/", component: "Index/Index" },

@@ -94,7 +94,6 @@ class BookingController extends Controller
                 ->send(new BookingAdminMail($booking));
         } catch (\Exception $e) {
             // Csak naplózza a hibát, de ne szakítsa meg a foglalást
-            dd($e);
             Log::error('Admin értesítés küldése sikertelen: ' . $e->getMessage());
         }
 
@@ -104,6 +103,7 @@ class BookingController extends Controller
         ]);
     }
 
+    /*
     public function update(Request $request) {
         dd($request);
     }
@@ -111,4 +111,5 @@ class BookingController extends Controller
     public function destroy(Request $request) {
         dd($request);
     }
+        */
 }
