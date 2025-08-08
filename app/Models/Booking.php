@@ -20,4 +20,11 @@ class Booking extends Model
         'verification_token', 
         'verified_at',
     ];
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'verified_at' => 'datetime',
+        'accepted' => 'boolean',
+    ];
 }

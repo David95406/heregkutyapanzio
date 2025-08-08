@@ -6,6 +6,7 @@ import { computed, reactive, ref, watch } from 'vue';
 import Booking from '../../classes/Booking';
 import BookingModal from '../../Components/BookingModal.vue';
 import { formatDate } from '../../utils';
+import { makeToast } from '../../toast';
 
 defineOptions({
   layout: AdminLayout
@@ -62,10 +63,11 @@ const accept = (bookingId, isModal = false) => {
     router.patch(route("admin.booking.accept", { booking: bookingId }), {}, {
       preserveScroll: true,
       onSuccess: () => {
-        if (isModal) bookingModalView.refresh()
+        makeToast('Foglalás sikeresen elfogadva!', 'success');
+        if (isModal) bookingModalView.refresh();
       },
       onError: () => {
-        alert('Hiba történt a művelet során.')
+        makeToast('Hiba történt a művelet során.', 'error');
       }
     });
   }
@@ -76,10 +78,11 @@ const deny = (bookingId, isModal = false) => {
     router.patch(route("admin.booking.deny", { booking: bookingId }), {}, {
       preserveScroll: true,
       onSuccess: () => {
-        if (isModal) bookingModalView.refresh()
+        makeToast('Foglalás sikeresen elutasítva!', 'success');
+        if (isModal) bookingModalView.refresh();
       },
       onError: () => {
-        alert('Hiba történt a művelet során.')
+        makeToast('Hiba történt a művelet során.', 'error');
       }
     })
   }

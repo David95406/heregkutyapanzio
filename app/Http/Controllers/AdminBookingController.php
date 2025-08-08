@@ -46,12 +46,12 @@ class AdminBookingController extends Controller
 
     public function accept(Request $request, Booking $booking) {
         $this->changeStatus($request, $booking, true);
-        $this->sendSuccessBookingMail($booking);
+        return $this->sendSuccessBookingMail($booking);
     }
 
     public function deny(Request $request, Booking $booking) {
         $this->changeStatus($request, $booking, false);
-        $this->sendDeniedBookingMail($booking);
+        return $this->sendDeniedBookingMail($booking);
     }
 
     public function update(Request $request, Booking $booking) {
@@ -92,7 +92,6 @@ class AdminBookingController extends Controller
         return redirect()->back()->with('success', 'A foglalás sikeresen frissítve!');
     }
 
-    public function destroy(Request $request) {
-        dd("pass");
-    }
+    
+    //public function destroy(Request $request) { }
 }

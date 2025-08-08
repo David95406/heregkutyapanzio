@@ -15,8 +15,8 @@ class AboutController extends Controller
         }
 
         return inertia("About/Index", [
-            "about1" => $aboutTexts['about1'],
-            "about2" => $aboutTexts['about2']
+            "about1" => $aboutTexts->get('about1', ''),
+            "about2" => $aboutTexts->get('about2', '')
         ]);
     }
 }
