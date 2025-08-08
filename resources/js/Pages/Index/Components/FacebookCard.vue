@@ -4,6 +4,7 @@ import Post from '../../../classes/Post';
 const props = defineProps({
     post: Post
 })
+
 </script>
 
 <template v-if="post">

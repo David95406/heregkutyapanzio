@@ -1,3 +1,28 @@
+<script setup>
+//      <img src="../../../../images/test.png" alt="">
+import SplitText from "../../../Components/SplitText.vue";
+
+const props = defineProps({
+  title: String,
+  subtitle: String,
+  breadcrumb: String,
+  image: String,
+  reverse: Boolean,
+  items: Array,
+  isFile: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
+});
+
+function getImageUrl(name) {
+  return new URL(`../../../../images/${name}`, import.meta.url).href;
+}
+
+console.log(props.image)
+</script>
+
 <template>
   <div class="flex flex-col tablet:w-full manrope-normal" :class="[
     reverse ? 'tablet:flex-row-reverse' : 'tablet:flex-row'
@@ -27,7 +52,7 @@
                   {{ item.text }}
                 </a>
                 <span v-else>{{ item.text }}</span>
-                </h3>
+              </h3>
             </div>
           </div>
         </div>
@@ -35,26 +60,15 @@
     </section>
 
     <!-- Kép -->
-    <section class="w-full @h-1/2 bg-light-blue">
-      <img :src="image" class="w-full h-full object-cover p-3 rounded-4xl" />
+    <section class="w-full @h-1/2">
+      <img v-if="!isFile" :src="image" class="w-full h-full object-cover" />
+      <img v-else :src="getImageUrl(image)" class="w-full h-full object-cover" />
     </section>
   </div>
 </template>
 
 <style scoped>
-h3{
+h3 {
   white-space: pre-wrap;
 }
 </style>
-
-<script setup>
-import SplitText from "../../../Components/SplitText.vue";
-defineProps({
-  title: String,
-  subtitle: String,
-  breadcrumb: String,
-  image: String,
-  reverse: Boolean,
-  items: Array
-});
-</script>
