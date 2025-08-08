@@ -51,11 +51,11 @@ const aboutItems = [
     <section>
         <ContentBlock breadcrumb="Kapcsolat" title="Lépj velünk kapcsolatba"
             subtitle="Keress minket bizalommal elérhetőségeink egyikén, vagy írj nekünk üzenetet!"
-            image="https://placehold.co/600x400" :items="aboutItems" :reverse="false" />
+            image="https://lh3.googleusercontent.com/d/1Fubol5Hn8gTUf0clsg3rFMsroUtyU1oi" :items="aboutItems" :reverse="false" />
         <ContentBlock breadcrumb="Történetünk" title="Rólunk"
             :subtitle="aboutText1"
             image="https://placehold.co/600x400" :reverse="true" />
-        <ContentBlock breadcrumb="Történetünk" title="Rólunk" 
+        <ContentBlock breadcrumb="Árak" title="Áraink" 
             :subtitle="aboutText2"
             image="https://placehold.co/600x400" :reverse="false" />
     </section>

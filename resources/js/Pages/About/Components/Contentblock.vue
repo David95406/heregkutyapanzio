@@ -35,8 +35,8 @@
     </section>
 
     <!-- Kép -->
-    <section class="w-full @h-1/2">
-      <img :src="image" class="w-full h-full object-cover" />
+    <section class="w-full @h-1/2 bg-light-blue">
+      <img :src="image" class="w-full h-full object-cover p-3 rounded-4xl" />
     </section>
   </div>
 </template>
