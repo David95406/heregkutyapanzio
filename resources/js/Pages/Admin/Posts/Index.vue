@@ -73,6 +73,11 @@ const toggleCreateModal = () => {
     }
 }
 
+const inactivePosts = computed(() => {
+    const sortedPosts = [...posts.value].sort((a, b) => b.getDate() > a.getDate() ? 1 : -1);
+    return sortedPosts.slice(9);
+});
+console.log(inactivePosts.value.at(9))
 const handleCancelCreate = () => {
     toggleCreateModal()
 }
@@ -111,6 +116,41 @@ const handleCancelCreate = () => {
                 <tbody class="bg-white divide-y divide-gray-200">
                     <PostLine v-for="post in posts" :key="post.getId()" :post="post" @update="updatePost"
                         @delete="deletePost" />
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="mt-12 px-4 py-8">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Inaktív bejegyzések</h2>
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <table class="w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2">
+                            Cím
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">
+                            Dátum
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">
+                            Műveletek
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <PostLine 
+                        v-for="post in inactivePosts" 
+                        :key="post.getId()" 
+                        :post="post" 
+                        @update="updatePost"
+                        @delete="deletePost" 
+                    />
+                    <tr v-if="inactivePosts.length === 0">
+                        <td colspan="3" class="px-6 py-4 text-center text-gray-500">
+                            Nincsenek inaktív bejegyzések
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
