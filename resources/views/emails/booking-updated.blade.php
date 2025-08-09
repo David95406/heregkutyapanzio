@@ -62,7 +62,7 @@
         <div class="content">
             <p>Tisztelt {{ $booking->name }}!</p>
             
-            <p>Ezúton tájékoztatjuk, hogy foglalásának adatai módosításra kerültek a Héreg Kutyapanzió rendszerében.</p>
+            <p>Ezúton tájékoztatjuk, hogy foglalásának adatai módosításra kerültek a Héreg DTC rendszerében.</p>
             
             <p>A módosított mező: <span class="highlight">{{ $updatedField == 'start_date' ? 'Kezdő dátum' : ($updatedField == 'end_date' ? 'Befejező dátum' : 'Megjegyzés') }}</span></p>
             
@@ -81,13 +81,13 @@
             </div>
             
             <p>Ha bármilyen kérdése van a foglalással kapcsolatban, kérjük vegye fel velünk a kapcsolatot az alábbi elérhetőségek egyikén:</p>
-            <p>Telefon: +36 20 123 4567<br>
-            Email: info@heregkutyapanzio.hu</p>
+            <p>Telefon: +36 30 225 0113<br>
+            Email: adrianjozsa81@gmail.com</p>
             
             <p>Köszönjük, hogy minket választott!</p>
             
             <p>Üdvözlettel,<br>
-            Héreg Kutyapanzió csapata</p>
+            Héreg DTC csapata</p>
         </div>
         
         <div class="footer">

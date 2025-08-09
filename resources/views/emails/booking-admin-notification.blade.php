@@ -74,7 +74,7 @@
     <div class="container">
         <div class="header">
             <h1>Új Megerősített Foglalás</h1>
-            <p>Héreg Kutyapanzió</p>
+            <p>Héreg DTC</p>
         </div>
         
         <p>Tisztelt Adminisztrátor!</p>
@@ -129,11 +129,11 @@
         <p>Kérjük, ellenőrizze és kezelje a foglalást az admin felületen.</p>
         
         <div class="actions">
-            <a href="{{ route('admin.index') }}" class="button">Admin felület megnyitása</a>
+            <a href="/admin" class="button">Admin felület megnyitása</a>
         </div>
         
         <p style="margin-top: 30px; font-size: 12px; color: #64748b; text-align: center;">
-            Ez egy automatikus értesítés, amely a Héreg Kutyapanzió foglalási rendszeréből érkezett.
+            Ez egy automatikus értesítés, amely a Héreg DTC foglalási rendszeréből érkezett.
         </p>
     </div>
 </body>

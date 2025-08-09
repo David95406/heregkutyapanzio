@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Foglalása elfogadva - Hereg Kutyapanzió</title>
+    <title>Foglalása elfogadva - Hereg DTC</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f4f4f4; color: #333333;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -12,7 +12,7 @@
                     <!-- Fejléc -->
                     <tr>
                         <td style="background-color: #22c55e; padding: 30px 40px; border-radius: 8px 8px 0 0; text-align: center;">
-                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Héreg Kutyapanzió</h1>
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Héreg DTC</h1>
                             <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 18px;">Foglalását elfogadtuk!</p>
                         </td>
                     </tr>
@@ -70,7 +70,7 @@
                             </p>
                             
                             <p style="color: #22c55e; margin-bottom: 0; font-size: 16px; font-weight: bold;">
-                                Köszönjük, hogy a Héreg Kutyapaznziót választotta! Szeretettel várjuk Önt és kedvencét!
+                                Köszönjük, hogy a Héreg DTC-t választotta! Szeretettel várjuk Önt és kedvencét!
                             </p>
                         </td>
                     </tr>
@@ -79,12 +79,12 @@
                     <tr>
                         <td style="background-color: #f3f4f6; padding: 20px; border-radius: 0 0 8px 8px; text-align: center; color: #666666; font-size: 14px;">
                             <p style="margin: 0 0 10px 0;">
-                                <strong>Héreg Kutyapanzió</strong><br>
-                                Telefon: +36 20 123 4567<br>
-                                Email: info@heregkutyapanzio.hu
+                                <strong>Héreg DTC</strong><br>
+                                Telefon: +36 30 225 0113<br>
+                                Email: adrianjozsa81@gmail.com
                             </p>
                             <p style="margin: 0;">
-                                © {{ date('Y') }} Hereg Kutyapanzió - Minden jog fenntartva
+                                © {{ date('Y') }} Hereg DTC - Minden jog fenntartva
                             </p>
                         </td>
                     </tr>
