@@ -25,6 +25,6 @@ class Booking extends Model
         'start_date' => 'datetime',
         'end_date' => 'datetime',
         'verified_at' => 'datetime',
-        'accepted' => 'boolean',
+        'accepted' => 'integer'
     ];
 }

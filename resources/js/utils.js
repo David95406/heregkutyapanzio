@@ -16,6 +16,7 @@ export function getBookingType(start, end) { // use class
 }
 
 export function formatDate(date) {
+    console.log(date)
     date = new Date(date)
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');

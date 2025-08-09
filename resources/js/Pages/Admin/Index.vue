@@ -16,6 +16,8 @@ const props = defineProps({
   bookings: Array
 })
 
+console.log(props.bookings.at(0))
+
 const range = ref({
   start: null,
   end: null,
