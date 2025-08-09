@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, computed, onMounted, onBeforeUnmount } from 'vue';
+import { computed, onMounted, onBeforeUnmount } from 'vue';
 import Post from '../../../../classes/Post';
 import FacebookCard from '../../../Index/Components/FacebookCard.vue';
 import { useForm } from '@inertiajs/vue3';
