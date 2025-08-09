@@ -1,5 +1,5 @@
-function fixVDatePicker(date) {
-    date.setDate(date.getDate() + 1);
+export function fixVDatePicker(date) {
+    date.setHours(date.getHours() + 2);
     return date;
 }
 
@@ -16,7 +16,6 @@ export function getBookingType(start, end) { // use class
 }
 
 export function formatDate(date) {
-    console.log(date)
     date = new Date(date)
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');

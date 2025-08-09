@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue'
+import { fixVDatePicker } from '../utils'
 
 const props = defineProps({
     inputType: String,
@@ -17,7 +18,7 @@ const emit = defineEmits(['send'])
 
 const form = reactive({
     content: props.inputType === "datetime-local" 
-        ? new Date(props.inputContent).toISOString().slice(0, 16) 
+        ? fixVDatePicker(new Date(props.inputContent)).toISOString().slice(0, 16)
         : props.inputContent
 })
 

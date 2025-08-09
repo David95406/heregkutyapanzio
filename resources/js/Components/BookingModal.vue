@@ -1,10 +1,11 @@
 <script setup>
 import Booking from '../classes/Booking';
 import { formatDate } from '../utils';
-import { ref, onMounted, onBeforeUnmount, reactive, compile, computed } from 'vue';
+import { ref, onMounted, onBeforeUnmount, reactive, computed } from 'vue';
 import MiniForm from './MiniForm.vue';
 import { route } from 'ziggy-js';
 import { router } from '@inertiajs/vue3';
+import { makeToast } from '../toast';
 
 const props = defineProps({
   booking: {
@@ -59,9 +60,10 @@ const updateBooking = (field, content) => {
     onSuccess: () => {
       emit('refresh');
       editState.toggle(null);
+      makeToast('Sikeres frissítés', 'A foglalás adatai sikeresen frissítve.', 'success');
     },
     onError: () => {
-      alert("Hiba történt a foglalás frissítése közben.")
+      makeToast("Hiba történt a foglalás frissítése közben.", 'danger')
     }
   })
 }

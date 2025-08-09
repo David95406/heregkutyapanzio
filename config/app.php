@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Budapest',
 
     /*
     |--------------------------------------------------------------------------
@@ -132,6 +132,6 @@ return [
     | booking notifications to the admin.
     |
     */
-    'admin_email' => env('BOOKING_ADMIN_EMAIL', 'admin@heregkutyapanzio.hu'),
+    # 'admin_email' => env('BOOKING_ADMIN_EMAIL', 'admin@heregkutyapanzio.hu'),
 
 ];

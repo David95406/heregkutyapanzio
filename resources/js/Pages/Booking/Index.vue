@@ -1,7 +1,7 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import StepCard from './Components/StepCard.vue';
-import { ref, computed, reactive } from 'vue';
+import { ref, computed } from 'vue';
 import { route } from 'ziggy-js';
 import { toMySqlDateTime } from '../../utils';
 import { createToast } from 'mosha-vue-toastify';
@@ -53,7 +53,6 @@ const bookingForm = useForm({
 const submitForm = () => {
     bookingForm.start_date = toMySqlDateTime(range.value.start)
     bookingForm.end_date = toMySqlDateTime(range.value.end)
-
     bookingForm.post(route("foglalas.store"), {
         onSuccess: () => {
             createToast('A foglalásodat sikeresen rögzítettük, hamarosan keresni fogunk emailben vagy telefonon. 😊', {
@@ -68,7 +67,7 @@ const submitForm = () => {
             range.value.end = null
             bookingForm.reset()
         },
-        onError: (error) => {
+        onError: () => {
             createToast('Hoppá, valamiért nem sikerült a foglalás. Ne aggódj, segítünk! Keress minket emailben vagy telefonon. 😊', {
                 type: 'danger',
                 transition: 'slide',

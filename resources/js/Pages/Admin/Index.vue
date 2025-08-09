@@ -5,7 +5,7 @@ import AdminLayout from '../../Layout/AdminLayout.vue';
 import { computed, reactive, ref, watch } from 'vue';
 import Booking from '../../classes/Booking';
 import BookingModal from '../../Components/BookingModal.vue';
-import { formatDate } from '../../utils';
+import { fixVDatePicker, formatDate } from '../../utils';
 import { makeToast } from '../../toast';
 
 defineOptions({
@@ -15,8 +15,6 @@ defineOptions({
 const props = defineProps({
   bookings: Array
 })
-
-console.log(props.bookings.at(0))
 
 const range = ref({
   start: null,
