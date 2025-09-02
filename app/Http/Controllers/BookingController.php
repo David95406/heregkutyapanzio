@@ -89,8 +89,8 @@ class BookingController extends Controller
         ])->save();
 
         // Admin értesítése az új megerősített foglalásról
-        try {
-            Mail::to("adrianjozsa@gmail.com") //config('app.admin_email', 'admin@heregkutyapanzio.hu')
+        try { // HARDCODE
+            Mail::to("adrianjozsa81@gmail.com") //config('app.admin_email', 'admin@heregkutyapanzio.hu')
                 ->send(new BookingAdminMail($booking));
         } catch (\Exception $e) {
             // Csak naplózza a hibát, de ne szakítsa meg a foglalást
